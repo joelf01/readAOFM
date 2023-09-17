@@ -1,0 +1,26 @@
+Package: readAOFM
+Title: Reads data from the AOFM's dataHub
+Version: 0.0.0.9000
+Authors@R: 
+    person("joelf01", email = "63056891+joelf01@users.noreply.github.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph). Add later.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports:
+    tidyr,
+    dplyr,
+    here,
+    httr,
+    readxl,
+    zoo,
+    data.table,
+    janitor,
+    stringr,
+    tibble
+Suggests:
+    ggplot2
+Depends: 
+    R (>= 2.10)
