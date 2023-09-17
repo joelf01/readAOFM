@@ -1,13 +1,16 @@
 #' Reads in and cleans any	data from the AOFM, returns cleaned in a long format
 #'
-#' @param security object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
-#' @param type the specific type of data you want, occasionally optional: dealt, settlement, issuance, syndication, buyback, turnover,
+#' @param security object you want data on, options include:
+#' tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
+#' @param type the specific type of data you want, occasionally optional:
+#' dealt, settlement, issuance, syndication, buyback, turnover,
 #' @param csv do you want to export the cleaned data as a csv to /data
 #' @param data.index internal data required to look up file to download
 #' @returns AOFM selected AOFM data as a dataframe or list
 #' @examples
 #' \dontrun{read("tb", "issuance")}
-#' # downloads Treasury Bond Issunace data from the AOFM, returns cleaned in a long format
+#' # downloads Treasury Bond Issunace data from the AOFM
+#' # returns cleaned in a long format
 #'
 #' @importFrom dplyr filter "%>%" pull
 #'
@@ -27,7 +30,6 @@ read_aofm <- function(security = NULL
   if (is.null(table_id)) {
     # No valid table found, return NULL
     return(NULL)
-    #if we return a table then run through using the appropriate function, use a for loop so user can download multiple files into R at once
   } else {
 
     if(length(table_id) == 1){

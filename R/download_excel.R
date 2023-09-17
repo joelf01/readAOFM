@@ -1,14 +1,17 @@
 #' Download xlsx.xls files from AOFM DataHub
 #'
-#' @param security object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
-#' @param type the specific type of data you want, occasionally optional: dealt, settlement, issuance, syndication, buyback, turnover,
+#' @param security object you want data on, options include:
+#' tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
+#' @param type the specific type of data you want, occasionally optional:
+#' dealt, settlement, issuance, syndication, buyback, turnover,
 #' @param data.index internal data required to look up file to download
 #' @returns a list of downloaded files
 #' @examples
 #' \dontrun{download_aofm_xlsx("tb", "issuance")}
 #' # downloads AOFM Treasury Bond Issuance data to data/tb_issuance.xlsx
 #' \dontrun{download_aofm_xlsx("tb")}
-#' # downloads all  Treasury Bond data from the AOFM Datahub incl. issunace, syndication details, position data etc to data/
+#' # downloads all Treasury Bond data from the AOFM Datahub incl
+#' # issunace, syndication details, position data etc to data/
 #' \dontrun{download_aofm_xlsx()}
 #' # downloads all data from the AOFM Datahub to data/
 #'

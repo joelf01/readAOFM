@@ -14,17 +14,21 @@ read_eom(aofm_table, csv = F, data.index = aofm_index)
 \item{data.index}{internal data required to look up file to download}
 }
 \value{
-AOFM eom data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
+AOFM eom data is returned as a list with data frame elements for
+FaceValue, MarketValue, Delta, Duration and Tenor
 }
 \description{
 Reads in and cleans the "End of Month Positions" data from the AOFM, returns a list
 }
 \examples{
 \dontrun{ read_eom("tb_position_dealt")}
-# downloads Treasury Bond EOM data on a dealt basis from the AOFM, returns cleaned in a long format
-# data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
+# downloads Treasury Bond EOM data on a dealt basis from the AOFM
+# returns cleaned in a long format
+# data is returned as a list with data frame elements for
+# FaceValue, MarketValue, Delta, Duration and Tenor
 \dontrun{read_eom("tb_position_settlement")}
-# downloads Treasury Bond EOM data on a settlement basis from the AOFM, returns cleaned in a long format
-# data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
+# downloads Treasury Bond EOM data on a settlement basis from the
+# AOFM, returns cleaned in a long format as a list with elements for each of
+# FaceValue, MarketValue, Delta, Duration and Tenor
 
 }

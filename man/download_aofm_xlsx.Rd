@@ -7,9 +7,11 @@
 download_aofm_xlsx(security = NULL, type = NULL, data.index = aofm_index)
 }
 \arguments{
-\item{security}{object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
+\item{security}{object you want data on, options include:
+tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
 
-\item{type}{the specific type of data you want, occasionally optional: dealt, settlement, issuance, syndication, buyback, turnover,}
+\item{type}{the specific type of data you want, occasionally optional:
+dealt, settlement, issuance, syndication, buyback, turnover,}
 
 \item{data.index}{internal data required to look up file to download}
 }
@@ -23,7 +25,8 @@ Download xlsx.xls files from AOFM DataHub
 \dontrun{download_aofm_xlsx("tb", "issuance")}
 # downloads AOFM Treasury Bond Issuance data to data/tb_issuance.xlsx
 \dontrun{download_aofm_xlsx("tb")}
-# downloads all  Treasury Bond data from the AOFM Datahub incl. issunace, syndication details, position data etc to data/
+# downloads all Treasury Bond data from the AOFM Datahub incl
+# issunace, syndication details, position data etc to data/
 \dontrun{download_aofm_xlsx()}
 # downloads all data from the AOFM Datahub to data/
 

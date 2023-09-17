@@ -7,7 +7,8 @@
 browse_tables(x = aofm_index_nav)
 }
 \arguments{
-\item{x}{object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
+\item{x}{object you want data on, options include:
+tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
 }
 \value{
 dataframe with index of files and arguments to download them

@@ -7,9 +7,11 @@
 read_aofm(security = NULL, type = NULL, csv = F, data.index = aofm_index)
 }
 \arguments{
-\item{security}{object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
+\item{security}{object you want data on, options include:
+tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
 
-\item{type}{the specific type of data you want, occasionally optional: dealt, settlement, issuance, syndication, buyback, turnover,}
+\item{type}{the specific type of data you want, occasionally optional:
+dealt, settlement, issuance, syndication, buyback, turnover,}
 
 \item{csv}{do you want to export the cleaned data as a csv to /data}
 
@@ -23,6 +25,7 @@ Reads in and cleans any	data from the AOFM, returns cleaned in a long format
 }
 \examples{
 \dontrun{read("tb", "issuance")}
-# downloads Treasury Bond Issunace data from the AOFM, returns cleaned in a long format
+# downloads Treasury Bond Issunace data from the AOFM
+# returns cleaned in a long format
 
 }

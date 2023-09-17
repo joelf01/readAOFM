@@ -1,6 +1,7 @@
 #' Show index of tables from the AOFM website
 #'
-#' @param x object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
+#' @param x object you want data on, options include:
+#' tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
 #' @returns dataframe with index of files and arguments to download them
 #' @examples
 #' \dontrun{download_aofm_xlsx()}
