@@ -7,7 +7,7 @@
 not_all_na(x)
 }
 \arguments{
-\item{datframe}{dataframe object}
+\item{x}{dataframe object}
 }
 \value{
 columns which are not ONLY NA values

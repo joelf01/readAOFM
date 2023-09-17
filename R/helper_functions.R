@@ -16,6 +16,7 @@ browse_tables <- function(x = aofm_index_nav){
 #' Read multiple excel sheet to a list object, cc Ralf Stubner on StackOverflow
 #'
 #' @param filename The file path to the .xlsx from which you want to pull all sheets
+#' @param tibble we always leave as false
 #' @returns list object with dataframe for each sheet
 
 read_excel_allsheets <- function(filename, tibble = FALSE) {
@@ -32,7 +33,7 @@ read_excel_allsheets <- function(filename, tibble = FALSE) {
 
 #' Select columns which dont have all NA values, cc zack on StackOverflow
 #'
-#' @param datframe dataframe object
+#' @param x dataframe object
 #' @returns columns which are not ONLY NA values
 
 

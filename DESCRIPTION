@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: 
     person("joelf01", email = "63056891+joelf01@users.noreply.github.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph). Add later.
+Description: Downloads, imports, and tidies time series data from the Australian Office of Financial Mnagement DataHub.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -19,7 +19,8 @@ Imports:
     data.table,
     janitor,
     stringr,
-    tibble
+    tibble,
+    readr
 Suggests:
     ggplot2
 Depends: 

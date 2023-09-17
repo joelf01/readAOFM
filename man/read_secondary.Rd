@@ -22,4 +22,5 @@ Reads in and cleans data under "AGS Secondary Market Turnover" from the AOFM, re
 \examples{
 read_secondary("tb_turnover")
 downloads Treasury Bond Turnover data from the AOFM, returns cleaned in a long format
+
 }

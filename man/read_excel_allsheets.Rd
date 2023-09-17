@@ -8,6 +8,8 @@ read_excel_allsheets(filename, tibble = FALSE)
 }
 \arguments{
 \item{filename}{The file path to the .xlsx from which you want to pull all sheets}
+
+\item{tibble}{we always leave as false}
 }
 \value{
 list object with dataframe for each sheet

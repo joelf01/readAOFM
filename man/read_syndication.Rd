@@ -22,4 +22,5 @@ Reads in and cleans Syndication details data under "Transaction Details" from th
 \examples{
 read_transactional("tb_syndication")
 downloads Treasury Bond Syndication details data from the AOFM, returns cleaned in a long format
+
 }

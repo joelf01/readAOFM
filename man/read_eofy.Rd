@@ -22,4 +22,5 @@ Reads in and cleans the EOFY Positions - Executive Summary	data from the AOFM, r
 \examples{
 read_eofy("summary")
 downloads EOFY Positions - Executive Summary	data from the AOFM, returns cleaned in a long format
+
 }

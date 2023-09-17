@@ -26,4 +26,5 @@ download_aofm_xlsx("tb")
 downloads all  Treasury Bond data from the AOFM Datahub incl. issunace, syndication details, position data etc to data/
 download_aofm_xlsx()
 downloads all data from the AOFM Datahub to data/
+
 }

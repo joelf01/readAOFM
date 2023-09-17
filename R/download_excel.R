@@ -11,6 +11,13 @@
 #' downloads all  Treasury Bond data from the AOFM Datahub incl. issunace, syndication details, position data etc to data/
 #' download_aofm_xlsx()
 #' downloads all data from the AOFM Datahub to data/
+#'
+#' @importFrom readxl excel_sheets read_excel
+#' @importFrom dplyr filter "%>%" pull
+#' @importFrom utils download.file
+#' @importFrom here here
+#'
+#' @export
 
 
 download_aofm_xlsx <- function(security = NULL ## options include; tb, tib, tn, slf, summary, aggregate, ownership, retail, term.premium

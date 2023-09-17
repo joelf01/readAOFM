@@ -22,4 +22,5 @@ Reads in and cleans data under "Term Premium Estimates" from the AOFM, returns c
 \examples{
 read_premium("termpremium")
 downloads Term Premium data from the AOFM, returns cleaned in a long format
+
 }
