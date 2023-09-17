@@ -135,7 +135,7 @@ read_eom <- function(aofm_table
     names(return.data)[i-1] <- output.name
 
     if (csv ==T){
-      write_csv(tmp4, here("output", output.name.csv))
+      write_csv(tmp4, here(output.name.csv))
     }
   }
 
@@ -223,7 +223,7 @@ read_transactional <- function(aofm_table
 
   if (csv ==T){
     output.name.csv <- paste0(aofm_table, ".csv")
-    write_csv(tmp3, here("output", output.name.csv))
+    write_csv(tmp3, here(output.name.csv))
   }
 
   return(tmp3)
@@ -282,7 +282,7 @@ read_syndication <- function(aofm_table
 
   if (csv ==T){
     output.name.csv <- paste0(aofm_table, ".csv")
-    write_csv(tmp5, here("output", output.name.csv))
+    write_csv(tmp5, here(output.name.csv))
   }
 
   return(tmp5)
@@ -340,7 +340,7 @@ read_secondary <- function(aofm_table
 
   if (csv ==T){
     output.name.csv <- paste0(aofm_table, ".csv")
-    write_csv(tmp5, here("output", output.name.csv))
+    write_csv(tmp5, here(output.name.csv))
   }
 
   return(tmp5)
@@ -398,7 +398,7 @@ read_premium <- function(aofm_table
 
   if (csv ==T){
     output.name.csv <- paste0(aofm_table, ".csv")
-    write_csv(tmp5, here("output", output.name.csv))
+    write_csv(tmp5, here(output.name.csv))
   }
 
   return(tmp5)
@@ -502,7 +502,7 @@ read_ownership <- function(aofm_table
     }
 
     if (csv ==T){
-      write_csv(tmp5, here("output", output.name.csv))
+      write_csv(tmp5, here(output.name.csv))
     }
   }
 
