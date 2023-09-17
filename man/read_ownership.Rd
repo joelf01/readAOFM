@@ -20,6 +20,6 @@ AOFM ownership data as a list, with elements relating to sheets in the original 
 Reads in and cleans data under "Ownership of Australia Government Securities" from the AOFM, returns cleaned in a long format
 }
 \examples{
-read_ownership("ownership_nonresident")
+\dontrun{read_ownership("ownership_nonresident")}
 
 }

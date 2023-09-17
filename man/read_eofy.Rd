@@ -20,7 +20,7 @@ AOFM eofy data as a dataframe
 Reads in and cleans the EOFY Positions - Executive Summary	data from the AOFM, returns cleaned in a long format
 }
 \examples{
-read_eofy("summary")
-downloads EOFY Positions - Executive Summary	data from the AOFM, returns cleaned in a long format
+\dontrun{read_eofy("summary")}
+# downloads EOFY Positions - Executive Summary	data from the AOFM, returns cleaned in a long format
 
 }

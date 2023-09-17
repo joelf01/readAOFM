@@ -20,10 +20,10 @@ a vector with the file/s which match the input params
 Find name of file to download from AOFM
 }
 \examples{
-find_file("tb", "issuance")
-returns "tb_issuance"
-find_file("tb")
-returns c("tb_issuance", "tb_syndication", "tb_turnover" .....)
-find_file()
-returns vector of all filenames
+\dontrun{find_file("tb", "issuance")}
+# returns "tb_issuance"
+\dontrun{find_file("tb")}
+\dontrun{returns c("tb_issuance", "tb_syndication", "tb_turnover" .....)}
+\dontrun{find_file()}
+# returns vector of all filenames
 }

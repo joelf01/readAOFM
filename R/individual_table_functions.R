@@ -5,13 +5,14 @@
 #' @param data.index internal data required to look up file to download
 #' @returns AOFM eofy data as a dataframe
 #' @examples
-#' read_eofy("summary")
-#' downloads EOFY Positions - Executive Summary	data from the AOFM, returns cleaned in a long format
+#' \dontrun{read_eofy("summary")}
+#' # downloads EOFY Positions - Executive Summary	data from the AOFM, returns cleaned in a long format
 #'
 #' @importFrom httr GET write_disk
 #' @importFrom zoo na.locf
 #' @importFrom tidyr pivot_longer
 #' @importFrom dplyr filter "%>%" pull mutate distinct mutate_at vars
+#' @importFrom stats na.omit
 #'
 #' @export
 
@@ -71,12 +72,12 @@ read_eofy <- function(aofm_table
 #' @param data.index internal data required to look up file to download
 #' @returns AOFM eom data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
 #' @examples
-#' read_eom("tb_position_dealt")
-#' downloads Treasury Bond EOM data on a dealt basis from the AOFM, returns cleaned in a long format
-#' data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
-#' read_eom("tb_position_settlement")
-#' downloads Treasury Bond EOM data on a settlement basis from the AOFM, returns cleaned in a long format
-#' data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
+#'\dontrun{ read_eom("tb_position_dealt")}
+#' # downloads Treasury Bond EOM data on a dealt basis from the AOFM, returns cleaned in a long format
+#' # data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
+#' \dontrun{read_eom("tb_position_settlement")}
+#' # downloads Treasury Bond EOM data on a settlement basis from the AOFM, returns cleaned in a long format
+#' # data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
 #'
 #' @importFrom httr GET write_disk
 #' @importFrom zoo na.locf
@@ -84,8 +85,8 @@ read_eofy <- function(aofm_table
 #' @importFrom dplyr filter "%>%" pull mutate distinct mutate_at vars
 #' @importFrom stringr str_detect
 #' @importFrom janitor row_to_names
-#' @importFrom data.table na.omit
 #' @importFrom readr write_csv
+#' @importFrom stats na.omit
 #'
 #' @export
 
@@ -182,10 +183,10 @@ read_eom <- function(aofm_table
 #' @param data.index internal data required to look up file to download
 #' @returns AOFM Transactional data as a dataframe
 #' @examples
-#' read_transactional("tb_issunace")
-#' downloads Treasury Bond Issunace data from the AOFM, returns cleaned in a long format
-#' read_transactional("slf")
-#' downloads Securities Lending Facility data from the AOFM, returns cleaned in a long format
+#' \dontrun{read_transactional("tb_issunace")}
+#' # downloads Treasury Bond Issunace data from the AOFM, returns cleaned in a long format
+#' \dontrun{read_transactional("slf")}
+#' # downloads Securities Lending Facility data from the AOFM, returns cleaned in a long format
 #'
 #' @importFrom httr GET write_disk
 #' @importFrom zoo na.locf
@@ -193,7 +194,7 @@ read_eom <- function(aofm_table
 #' @importFrom dplyr filter "%>%" pull mutate distinct mutate_at vars mutate_if select where select_if
 #' @importFrom stringr str_detect
 #' @importFrom janitor row_to_names clean_names
-#' @importFrom data.table na.omit
+#' @importFrom stats na.omit
 #' @importFrom readr write_csv
 #'
 #' @export
@@ -274,8 +275,8 @@ read_transactional <- function(aofm_table
 #' @param data.index internal data required to look up file to download
 #' @returns AOFM Transactional data as a dataframe
 #' @examples
-#' read_transactional("tb_syndication")
-#' downloads Treasury Bond Syndication details data from the AOFM, returns cleaned in a long format
+#' \dontrun{read_transactional("tb_syndication")}
+#' # downloads Treasury Bond Syndication details data from the AOFM, returns cleaned in a long format
 #'
 #' @importFrom httr GET write_disk
 #' @importFrom zoo na.locf
@@ -283,8 +284,8 @@ read_transactional <- function(aofm_table
 #' @importFrom dplyr filter "%>%" pull mutate distinct mutate_at vars mutate_if select where select_if
 #' @importFrom stringr str_detect
 #' @importFrom janitor row_to_names clean_names
-#' @importFrom data.table na.omit
 #' @importFrom readr write_csv
+#' @importFrom stats na.omit
 #'
 #' @export
 
@@ -346,8 +347,8 @@ read_syndication <- function(aofm_table
 #' @param data.index internal data required to look up file to download
 #' @returns AOFM Transactional data as a dataframe
 #' @examples
-#' read_secondary("tb_turnover")
-#' downloads Treasury Bond Turnover data from the AOFM, returns cleaned in a long format
+#' \dontrun{read_secondary("tb_turnover")}
+#' # downloads Treasury Bond Turnover data from the AOFM, returns cleaned in a long format
 #'
 #' @importFrom httr GET write_disk
 #' @importFrom zoo na.locf
@@ -355,7 +356,6 @@ read_syndication <- function(aofm_table
 #' @importFrom dplyr filter "%>%" pull mutate distinct mutate_at vars mutate_if select where select_if
 #' @importFrom stringr str_detect
 #' @importFrom janitor row_to_names clean_names
-#' @importFrom data.table na.omit
 #' @importFrom readr write_csv
 #'
 #' @export
@@ -413,8 +413,8 @@ read_secondary <- function(aofm_table
 #' @param data.index internal data required to look up file to download
 #' @returns AOFM Transactional data as a dataframe
 #' @examples
-#' read_premium("termpremium")
-#' downloads Term Premium data from the AOFM, returns cleaned in a long format
+#' \dontrun{read_premium("termpremium")}
+#' # downloads Term Premium data from the AOFM, returns cleaned in a long format
 #'
 #' @importFrom httr GET write_disk
 #' @importFrom zoo na.locf
@@ -422,7 +422,6 @@ read_secondary <- function(aofm_table
 #' @importFrom dplyr filter "%>%" pull mutate distinct mutate_at vars mutate_if select where select_if arrange
 #' @importFrom stringr str_detect
 #' @importFrom janitor row_to_names clean_names
-#' @importFrom data.table na.omit
 #' @importFrom readr write_csv
 #' @importFrom readxl cell_rows
 #'
@@ -485,7 +484,7 @@ read_premium <- function(aofm_table
 #' @param data.index internal data required to look up file to download
 #' @returns AOFM ownership data as a list, with elements relating to sheets in the original file
 #' @examples
-#' read_ownership("ownership_nonresident")
+#' \dontrun{read_ownership("ownership_nonresident")}
 #'
 #' @importFrom httr GET write_disk
 #' @importFrom zoo na.locf
@@ -493,7 +492,6 @@ read_premium <- function(aofm_table
 #' @importFrom dplyr filter "%>%" pull mutate distinct mutate_at vars mutate_if select where select_if arrange
 #' @importFrom stringr str_detect
 #' @importFrom janitor row_to_names clean_names
-#' @importFrom data.table na.omit
 #' @importFrom readr write_csv
 #' @importFrom readxl cell_rows
 #'

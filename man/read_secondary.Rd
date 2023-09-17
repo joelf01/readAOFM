@@ -20,7 +20,7 @@ AOFM Transactional data as a dataframe
 Reads in and cleans data under "AGS Secondary Market Turnover" from the AOFM, returns cleaned in a long format
 }
 \examples{
-read_secondary("tb_turnover")
-downloads Treasury Bond Turnover data from the AOFM, returns cleaned in a long format
+\dontrun{read_secondary("tb_turnover")}
+# downloads Treasury Bond Turnover data from the AOFM, returns cleaned in a long format
 
 }

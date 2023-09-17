@@ -16,6 +16,6 @@ dataframe with index of files and arguments to download them
 Show index of tables from the AOFM website
 }
 \examples{
-download_aofm_xlsx()
-return dataframe with list of files/arguments
+\dontrun{download_aofm_xlsx()}
+# return dataframe with list of files/arguments
 }

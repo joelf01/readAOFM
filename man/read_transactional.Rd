@@ -20,9 +20,9 @@ AOFM Transactional data as a dataframe
 Reads in and cleans data under "Transaction Details" from the AOFM, returns cleaned in a long format (excl. issunace via conversion and syndication details)
 }
 \examples{
-read_transactional("tb_issunace")
-downloads Treasury Bond Issunace data from the AOFM, returns cleaned in a long format
-read_transactional("slf")
-downloads Securities Lending Facility data from the AOFM, returns cleaned in a long format
+\dontrun{read_transactional("tb_issunace")}
+# downloads Treasury Bond Issunace data from the AOFM, returns cleaned in a long format
+\dontrun{read_transactional("slf")}
+# downloads Securities Lending Facility data from the AOFM, returns cleaned in a long format
 
 }

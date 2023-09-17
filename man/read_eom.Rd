@@ -20,11 +20,11 @@ AOFM eom data is returned as a list with data frame elements for FaceValue, Mark
 Reads in and cleans the "End of Month Positions" data from the AOFM, returns a list
 }
 \examples{
-read_eom("tb_position_dealt")
-downloads Treasury Bond EOM data on a dealt basis from the AOFM, returns cleaned in a long format
-data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
-read_eom("tb_position_settlement")
-downloads Treasury Bond EOM data on a settlement basis from the AOFM, returns cleaned in a long format
-data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
+\dontrun{ read_eom("tb_position_dealt")}
+# downloads Treasury Bond EOM data on a dealt basis from the AOFM, returns cleaned in a long format
+# data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
+\dontrun{read_eom("tb_position_settlement")}
+# downloads Treasury Bond EOM data on a settlement basis from the AOFM, returns cleaned in a long format
+# data is returned as a list with data frame elements for FaceValue, MarketValue, Delta, Duration and Tenor
 
 }

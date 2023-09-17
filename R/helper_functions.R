@@ -3,8 +3,8 @@
 #' @param x object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
 #' @returns dataframe with index of files and arguments to download them
 #' @examples
-#' download_aofm_xlsx()
-#' return dataframe with list of files/arguments
+#' \dontrun{download_aofm_xlsx()}
+#' # return dataframe with list of files/arguments
 
 browse_tables <- function(x = aofm_index_nav){
   print(x)
@@ -52,12 +52,12 @@ not_all_na <- function(x) any(!is.na(x))
 #' @param data.index internal data required to look up file to download
 #' @returns a vector with the file/s which match the input params
 #' @examples
-#' find_file("tb", "issuance")
-#' returns "tb_issuance"
-#' find_file("tb")
-#' returns c("tb_issuance", "tb_syndication", "tb_turnover" .....)
-#' find_file()
-#' returns vector of all filenames
+#' \dontrun{find_file("tb", "issuance")}
+#' # returns "tb_issuance"
+#' \dontrun{find_file("tb")}
+#' \dontrun{returns c("tb_issuance", "tb_syndication", "tb_turnover" .....)}
+#' \dontrun{find_file()}
+#' # returns vector of all filenames
 
 
 find_file <- function(security = NULL ## options include; tb, tib, tn, slf, summary, aggregate, ownership, retail, term.premium

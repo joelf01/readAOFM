@@ -1,8 +1,17 @@
+library(tidyr)
+library(dplyr)
 library(here)
+library(httr)
+library(readxl)
+library(zoo)
+library(data.table)
+library(janitor)
+library(stringr)
+library(tibble)
 library(ggplot2)
+
 library(readAOFM)
 
-View(browse_tables())
 
 ## Treasury Bond Coverage Ratio's
 p <- read_aofm("tb", "issuance") %>%

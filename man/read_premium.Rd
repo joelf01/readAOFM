@@ -20,7 +20,7 @@ AOFM Transactional data as a dataframe
 Reads in and cleans data under "Term Premium Estimates" from the AOFM, returns cleaned in a long format
 }
 \examples{
-read_premium("termpremium")
-downloads Term Premium data from the AOFM, returns cleaned in a long format
+\dontrun{read_premium("termpremium")}
+# downloads Term Premium data from the AOFM, returns cleaned in a long format
 
 }

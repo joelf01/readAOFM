@@ -20,11 +20,11 @@ a list of downloaded files
 Download xlsx.xls files from AOFM DataHub
 }
 \examples{
-download_aofm_xlsx("tb", "issuance")
-downloads AOFM Treasury Bond Issuance data to data/tb_issuance.xlsx
-download_aofm_xlsx("tb")
-downloads all  Treasury Bond data from the AOFM Datahub incl. issunace, syndication details, position data etc to data/
-download_aofm_xlsx()
-downloads all data from the AOFM Datahub to data/
+\dontrun{download_aofm_xlsx("tb", "issuance")}
+# downloads AOFM Treasury Bond Issuance data to data/tb_issuance.xlsx
+\dontrun{download_aofm_xlsx("tb")}
+# downloads all  Treasury Bond data from the AOFM Datahub incl. issunace, syndication details, position data etc to data/
+\dontrun{download_aofm_xlsx()}
+# downloads all data from the AOFM Datahub to data/
 
 }

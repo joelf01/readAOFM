@@ -19,8 +19,8 @@ Imports:
     data.table,
     janitor,
     stringr,
-    tibble,
-    readr
+    readr,
+    stats
 Suggests:
     ggplot2
 Depends: 
