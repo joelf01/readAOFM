@@ -42,7 +42,7 @@ read_eofy <- function(aofm_table
     mutate_at(vars(value), ~replace_na(., 0)) %>%
     na.omit()
 
-  if (is.null(csv)!=T){
+  if (csv ==T){
     write_csv(eofy_executive_summary, here("output", "eofy_executive_summary.csv"))
   }
   return(eofy_executive_summary)
@@ -134,7 +134,7 @@ read_eom <- function(aofm_table
     return.data[[i-1]] <- tmp4
     names(return.data)[i-1] <- output.name
 
-    if (is.null(csv)!=T){
+    if (csv ==T){
       write_csv(tmp4, here("output", output.name.csv))
     }
   }
@@ -221,7 +221,7 @@ read_transactional <- function(aofm_table
     pivot_longer(!colnames((.) %>% select_if(~!is.numeric(.)))) %>%
     na.omit(value)
 
-  if (is.null(csv)!=T){
+  if (csv ==T){
     output.name.csv <- paste0(aofm_table, ".csv")
     write_csv(tmp3, here("output", output.name.csv))
   }
@@ -280,7 +280,7 @@ read_syndication <- function(aofm_table
   tmp5 <- tmp3 %>%
     rbind(tmp4)
 
-  if (is.null(csv)!=T){
+  if (csv ==T){
     output.name.csv <- paste0(aofm_table, ".csv")
     write_csv(tmp5, here("output", output.name.csv))
   }
@@ -338,7 +338,7 @@ read_secondary <- function(aofm_table
   tmp5 <- tmp3 %>%
     rbind(tmp4)
 
-  if (is.null(csv)!=T){
+  if (csv ==T){
     output.name.csv <- paste0(aofm_table, ".csv")
     write_csv(tmp5, here("output", output.name.csv))
   }
@@ -396,7 +396,7 @@ read_premium <- function(aofm_table
     rbind(tmp4) %>%
     arrange(date)
 
-  if (is.null(csv)!=T){
+  if (csv ==T){
     output.name.csv <- paste0(aofm_table, ".csv")
     write_csv(tmp5, here("output", output.name.csv))
   }
@@ -501,7 +501,7 @@ read_ownership <- function(aofm_table
       names(return.data)[i] <- output.name
     }
 
-    if (is.null(csv)!=T){
+    if (csv ==T){
       write_csv(tmp5, here("output", output.name.csv))
     }
   }
