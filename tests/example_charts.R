@@ -16,7 +16,7 @@ library(readAOFM)
 ## Treasury Bond Coverage Ratio's
 tmp <- read_aofm("tib", "issuance")
 
-tmnp %>%
+p <- tmp %>%
   filter(name == "coverage_ratio") %>%
   ggplot(aes(x = date_held
              , y = value
