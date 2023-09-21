@@ -4,7 +4,7 @@
 \alias{find_file}
 \title{Find name of file to download from AOFM}
 \usage{
-find_file(security = NULL, type = NULL, data.index = aofm_index)
+find_file(security = NULL, type = NULL)
 }
 \arguments{
 \item{security}{object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}

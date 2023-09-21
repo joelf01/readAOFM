@@ -4,7 +4,7 @@
 \alias{download_aofm_xlsx}
 \title{Download xlsx.xls files from AOFM DataHub}
 \usage{
-download_aofm_xlsx(security = NULL, type = NULL, data.index = aofm_index)
+download_aofm_xlsx(security = NULL, type = NULL)
 }
 \arguments{
 \item{security}{object you want data on, options include:

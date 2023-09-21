@@ -63,14 +63,14 @@ not_all_na <- function(x) any(!is.na(x))
 
 find_file <- function(security = NULL ## options include; tb, tib, tn, slf, summary, aggregate, ownership, retail, term.premium
                       , type =  NULL ## options include; dealt, settlement, issuance, syndication, buyback, turnover
-                      , data.index = aofm_index
+                      # , data.index = aofm_index
 ){
 
   if (is.null(security) != T){
-    tmp <- data.index %>%
+    tmp <- aofm_index %>%
       filter(p.security == security)
   } else {
-    tmp <- data.index
+    tmp <- aofm_index
   }
 
   if (is.null(type) != T){

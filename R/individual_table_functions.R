@@ -19,11 +19,11 @@
 
 read_eofy <- function(aofm_table
                       , csv = F
-                      , data.index = aofm_index
+                      # , data.index = aofm_index
 ) {
 
 
-  file.url <- data.index %>%
+  file.url <- aofm_index %>%
     filter(id == aofm_table) %>%
     pull(file.path)
 
@@ -96,10 +96,10 @@ read_eofy <- function(aofm_table
 
 read_eom <- function(aofm_table
                      , csv = F
-                     , data.index = aofm_index
+                     # , data.index = aofm_index
 ) {
 
-  file.url <- data.index %>%
+  file.url <- aofm_index %>%
     filter(id == aofm_table) %>%
     pull(file.path)
 
@@ -205,10 +205,10 @@ read_eom <- function(aofm_table
 
 read_transactional <- function(aofm_table
                                , csv = F
-                               , data.index = aofm_index
+                               # , data.index = aofm_index
 ) {
 
-  file.url <- data.index %>%
+  file.url <- aofm_index %>%
     filter(id == aofm_table) %>%
     pull(file.path)
 
@@ -296,10 +296,10 @@ read_transactional <- function(aofm_table
 
 read_syndication <- function(aofm_table
                              , csv = F
-                             , data.index = aofm_index
+                             # , data.index = aofm_index
 ) {
 
-  file.url <- data.index %>%
+  file.url <- aofm_index %>%
     filter(id == aofm_table) %>%
     pull(file.path)
 
@@ -366,10 +366,10 @@ read_syndication <- function(aofm_table
 
 read_secondary <- function(aofm_table
                            , csv = F
-                           , data.index = aofm_index
+                           # , data.index = aofm_index
 ) {
 
-  file.url <- data.index %>%
+  file.url <- aofm_index %>%
     filter(id == aofm_table) %>%
     pull(file.path)
 
@@ -433,10 +433,10 @@ read_secondary <- function(aofm_table
 
 read_premium <- function(aofm_table
                          , csv = F
-                         , data.index = aofm_index
+                         # , data.index = aofm_index
 ) {
 
-  file.url <- data.index %>%
+  file.url <- aofm_index %>%
     filter(id == aofm_table) %>%
     pull(file.path)
 
@@ -504,10 +504,10 @@ read_premium <- function(aofm_table
 
 read_ownership <- function(aofm_table
                            , csv = F
-                           , data.index = aofm_index
+                           # , data.index = aofm_index
 ) {
 
-  file.url <- data.index %>%
+  file.url <- aofm_index %>%
     filter(id == aofm_table) %>%
     pull(file.path)
 

@@ -20,11 +20,11 @@
 read_aofm <- function(security = NULL
                       , type = NULL
                       , csv = F
-                      , data.index = aofm_index
+                      # , data.index = aofm_index
 ) {
 
   # Use the find_file function to get the appropriate table(s) to download
-  table_id <- find_file(security, type, data.index)
+  table_id <- find_file(security, type, aofm_index)
 
   # if no table returned then exit function
   if (is.null(table_id)) {
@@ -34,7 +34,7 @@ read_aofm <- function(security = NULL
 
     if(length(table_id) == 1){
 
-      child_fn <- data.index %>%
+      child_fn <- aofm_index %>%
         filter(id == table_id) %>%
         pull(fn)
 

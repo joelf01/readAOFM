@@ -4,7 +4,7 @@
 \alias{read_premium}
 \title{Reads in and cleans data under "Term Premium Estimates" from the AOFM, returns cleaned in a long format}
 \usage{
-read_premium(aofm_table, csv = F, data.index = aofm_index)
+read_premium(aofm_table, csv = F)
 }
 \arguments{
 \item{aofm_table}{object to download, typically called from read_aofm()}

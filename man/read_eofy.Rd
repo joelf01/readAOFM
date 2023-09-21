@@ -4,7 +4,7 @@
 \alias{read_eofy}
 \title{Reads in and cleans the EOFY Positions - Executive Summary	data from the AOFM, returns cleaned in a long format}
 \usage{
-read_eofy(aofm_table, csv = F, data.index = aofm_index)
+read_eofy(aofm_table, csv = F)
 }
 \arguments{
 \item{aofm_table}{object to download, "summary" is the only correct input, typically called from read_aofm()}

@@ -4,7 +4,7 @@
 \alias{read_aofm}
 \title{Reads in and cleans any	data from the AOFM, returns cleaned in a long format}
 \usage{
-read_aofm(security = NULL, type = NULL, csv = F, data.index = aofm_index)
+read_aofm(security = NULL, type = NULL, csv = F)
 }
 \arguments{
 \item{security}{object you want data on, options include:

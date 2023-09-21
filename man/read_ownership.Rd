@@ -4,7 +4,7 @@
 \alias{read_ownership}
 \title{Reads in and cleans data under "Ownership of Australia Government Securities" from the AOFM, returns cleaned in a long format}
 \usage{
-read_ownership(aofm_table, csv = F, data.index = aofm_index)
+read_ownership(aofm_table, csv = F)
 }
 \arguments{
 \item{aofm_table}{object to download, typically called from read_aofm()}

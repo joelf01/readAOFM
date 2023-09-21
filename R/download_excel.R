@@ -25,11 +25,11 @@
 
 download_aofm_xlsx <- function(security = NULL ## options include; tb, tib, tn, slf, summary, aggregate, ownership, retail, term.premium
                                , type =  NULL ## options include;
-                               , data.index = aofm_index
+                               # , data.index = aofm_index
 ) {
 
   # run find_file function to determine which file to download
-  aofm_table <- find_file(security, type, basis, data.index)
+  aofm_table <- find_file(security, type, basis, aofm_index)
 
   # check if /data sub folder exists and create if not
   if (dir.exists("data") == F) {
@@ -41,11 +41,11 @@ download_aofm_xlsx <- function(security = NULL ## options include; tb, tib, tn, 
 
   } else {
     for (i in 1:length(aofm_table)){
-      file.url <- data.index %>%
-        filter(id == data.index$id[i]) %>%
+      file.url <- aofm_index %>%
+        filter(id == aofm_index$id[i]) %>%
         pull(file.path)
 
-      file.name <- data.index$file.save[i]
+      file.name <- aofm_index$file.save[i]
       download.file(file.url, destfile = here("data", file.name))
     }
     print(paste("The following files have been downloaded to:", here("data")))

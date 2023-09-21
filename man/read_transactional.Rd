@@ -4,7 +4,7 @@
 \alias{read_transactional}
 \title{Reads in and cleans data under "Transaction Details" from the AOFM, returns cleaned in a long format (excl. issunace via conversion and syndication details)}
 \usage{
-read_transactional(aofm_table, csv = F, data.index = aofm_index)
+read_transactional(aofm_table, csv = F)
 }
 \arguments{
 \item{aofm_table}{object to download, typically called from read_aofm()}

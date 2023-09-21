@@ -4,7 +4,7 @@
 \alias{read_eom}
 \title{Reads in and cleans the "End of Month Positions" data from the AOFM, returns a list}
 \usage{
-read_eom(aofm_table, csv = F, data.index = aofm_index)
+read_eom(aofm_table, csv = F)
 }
 \arguments{
 \item{aofm_table}{object to download, typically called from read_aofm()}
