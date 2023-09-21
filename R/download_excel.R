@@ -27,7 +27,7 @@ download_aofm_xlsx <- function(security = NULL ## options include; tb, tib, tn, 
 ) {
 
   # run find_file function to determine which file to download
-  aofm_table <- find_file(security, type, basis, aofm_index)
+  aofm_table <- find_file(security, type)
 
   # check if /data sub folder exists and create if not
   if (dir.exists("data") == F) {

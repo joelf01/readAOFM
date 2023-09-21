@@ -14,7 +14,9 @@ library(readAOFM)
 
 
 ## Treasury Bond Coverage Ratio's
-p <- read_aofm("tb", "issuance") %>%
+tmp <- read_aofm("tib", "issuance")
+
+tmnp %>%
   filter(name == "coverage_ratio") %>%
   ggplot(aes(x = date_held
              , y = value
@@ -30,7 +32,7 @@ p
 
 
 ## Treasury Bond Annual Issuance Volume
-q <- read_aofm("tb", "issuance") %>%
+q <- tmp %>%
   filter(name == "amount_allotted") %>%
   mutate(year = year(date_held)) %>%
   group_by(year) %>%
