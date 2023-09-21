@@ -4,7 +4,6 @@
 #' tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
 #' @param type the specific type of data you want, occasionally optional:
 #' dealt, settlement, issuance, syndication, buyback, turnover,
-#' @param data.index internal data required to look up file to download
 #' @returns a list of downloaded files
 #' @examples
 #' \dontrun{download_aofm_xlsx("tb", "issuance")}
@@ -25,7 +24,6 @@
 
 download_aofm_xlsx <- function(security = NULL ## options include; tb, tib, tn, slf, summary, aggregate, ownership, retail, term.premium
                                , type =  NULL ## options include;
-                               # , data.index = aofm_index
 ) {
 
   # run find_file function to determine which file to download

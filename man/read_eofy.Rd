@@ -10,8 +10,6 @@ read_eofy(aofm_table, csv = F)
 \item{aofm_table}{object to download, "summary" is the only correct input, typically called from read_aofm()}
 
 \item{csv}{do you want to export the cleaned data as a csv to /data}
-
-\item{data.index}{internal data required to look up file to download}
 }
 \value{
 AOFM eofy data as a dataframe

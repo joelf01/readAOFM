@@ -5,7 +5,6 @@
 #' @param type the specific type of data you want, occasionally optional:
 #' dealt, settlement, issuance, syndication, buyback, turnover,
 #' @param csv do you want to export the cleaned data as a csv to /data
-#' @param data.index internal data required to look up file to download
 #' @returns AOFM selected AOFM data as a dataframe or list
 #' @examples
 #' \dontrun{read("tb", "issuance")}
@@ -20,11 +19,10 @@
 read_aofm <- function(security = NULL
                       , type = NULL
                       , csv = F
-                      # , data.index = aofm_index
 ) {
 
   # Use the find_file function to get the appropriate table(s) to download
-  table_id <- find_file(security, type, aofm_index)
+  table_id <- find_file(security, type)
 
   # if no table returned then exit function
   if (is.null(table_id)) {

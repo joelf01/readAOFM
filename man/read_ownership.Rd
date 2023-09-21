@@ -10,8 +10,6 @@ read_ownership(aofm_table, csv = F)
 \item{aofm_table}{object to download, typically called from read_aofm()}
 
 \item{csv}{do you want to export the cleaned data as a csv to /data}
-
-\item{data.index}{internal data required to look up file to download}
 }
 \value{
 AOFM ownership data as a list, with elements relating to sheets in the original file

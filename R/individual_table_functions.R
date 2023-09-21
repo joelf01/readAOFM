@@ -2,7 +2,6 @@
 #'
 #' @param aofm_table object to download, "summary" is the only correct input, typically called from read_aofm()
 #' @param csv do you want to export the cleaned data as a csv to /data
-#' @param data.index internal data required to look up file to download
 #' @returns AOFM eofy data as a dataframe
 #' @examples
 #' \dontrun{read_eofy("summary")}
@@ -19,7 +18,6 @@
 
 read_eofy <- function(aofm_table
                       , csv = F
-                      # , data.index = aofm_index
 ) {
 
 
@@ -69,7 +67,6 @@ read_eofy <- function(aofm_table
 #'
 #' @param aofm_table object to download, typically called from read_aofm()
 #' @param csv do you want to export the cleaned data as a csv to /data
-#' @param data.index internal data required to look up file to download
 #' @returns AOFM eom data is returned as a list with data frame elements for
 #' FaceValue, MarketValue, Delta, Duration and Tenor
 #' @examples
@@ -96,7 +93,6 @@ read_eofy <- function(aofm_table
 
 read_eom <- function(aofm_table
                      , csv = F
-                     # , data.index = aofm_index
 ) {
 
   file.url <- aofm_index %>%
@@ -184,7 +180,6 @@ read_eom <- function(aofm_table
 #'
 #' @param aofm_table object to download, typically called from read_aofm()
 #' @param csv do you want to export the cleaned data as a csv to /data
-#' @param data.index internal data required to look up file to download
 #' @returns AOFM Transactional data as a dataframe
 #' @examples
 #' \dontrun{read_transactional("tb_issunace")}
@@ -205,7 +200,6 @@ read_eom <- function(aofm_table
 
 read_transactional <- function(aofm_table
                                , csv = F
-                               # , data.index = aofm_index
 ) {
 
   file.url <- aofm_index %>%
@@ -276,7 +270,6 @@ read_transactional <- function(aofm_table
 #'
 #' @param aofm_table object to download, typically called from read_aofm()
 #' @param csv do you want to export the cleaned data as a csv to /data
-#' @param data.index internal data required to look up file to download
 #' @returns AOFM Transactional data as a dataframe
 #' @examples
 #' \dontrun{read_transactional("tb_syndication")}
@@ -296,7 +289,6 @@ read_transactional <- function(aofm_table
 
 read_syndication <- function(aofm_table
                              , csv = F
-                             # , data.index = aofm_index
 ) {
 
   file.url <- aofm_index %>%
@@ -348,7 +340,6 @@ read_syndication <- function(aofm_table
 #'
 #' @param aofm_table object to download, typically called from read_aofm()
 #' @param csv do you want to export the cleaned data as a csv to /data
-#' @param data.index internal data required to look up file to download
 #' @returns AOFM Transactional data as a dataframe
 #' @examples
 #' \dontrun{read_secondary("tb_turnover")}
@@ -366,7 +357,6 @@ read_syndication <- function(aofm_table
 
 read_secondary <- function(aofm_table
                            , csv = F
-                           # , data.index = aofm_index
 ) {
 
   file.url <- aofm_index %>%
@@ -414,7 +404,6 @@ read_secondary <- function(aofm_table
 #'
 #' @param aofm_table object to download, typically called from read_aofm()
 #' @param csv do you want to export the cleaned data as a csv to /data
-#' @param data.index internal data required to look up file to download
 #' @returns AOFM Transactional data as a dataframe
 #' @examples
 #' \dontrun{read_premium("termpremium")}
@@ -433,7 +422,6 @@ read_secondary <- function(aofm_table
 
 read_premium <- function(aofm_table
                          , csv = F
-                         # , data.index = aofm_index
 ) {
 
   file.url <- aofm_index %>%
@@ -485,7 +473,6 @@ read_premium <- function(aofm_table
 #'
 #' @param aofm_table object to download, typically called from read_aofm()
 #' @param csv do you want to export the cleaned data as a csv to /data
-#' @param data.index internal data required to look up file to download
 #' @returns AOFM ownership data as a list, with elements relating to sheets in the original file
 #' @examples
 #' \dontrun{read_ownership("ownership_nonresident")}
@@ -504,7 +491,6 @@ read_premium <- function(aofm_table
 
 read_ownership <- function(aofm_table
                            , csv = F
-                           # , data.index = aofm_index
 ) {
 
   file.url <- aofm_index %>%

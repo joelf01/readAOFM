@@ -50,7 +50,6 @@ not_all_na <- function(x) any(!is.na(x))
 #'
 #' @param security object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
 #' @param type the specific type of data you want, occasionally optional: dealt, settlement, issuance, syndication, buyback, turnover,
-#' @param data.index internal data required to look up file to download
 #' @returns a vector with the file/s which match the input params
 #' @examples
 #' \dontrun{find_file("tb", "issuance")}
@@ -63,7 +62,6 @@ not_all_na <- function(x) any(!is.na(x))
 
 find_file <- function(security = NULL ## options include; tb, tib, tn, slf, summary, aggregate, ownership, retail, term.premium
                       , type =  NULL ## options include; dealt, settlement, issuance, syndication, buyback, turnover
-                      # , data.index = aofm_index
 ){
 
   if (is.null(security) != T){

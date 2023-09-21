@@ -14,8 +14,6 @@ tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
 dealt, settlement, issuance, syndication, buyback, turnover,}
 
 \item{csv}{do you want to export the cleaned data as a csv to /data}
-
-\item{data.index}{internal data required to look up file to download}
 }
 \value{
 AOFM selected AOFM data as a dataframe or list

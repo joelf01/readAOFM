@@ -10,8 +10,6 @@ find_file(security = NULL, type = NULL)
 \item{security}{object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
 
 \item{type}{the specific type of data you want, occasionally optional: dealt, settlement, issuance, syndication, buyback, turnover,}
-
-\item{data.index}{internal data required to look up file to download}
 }
 \value{
 a vector with the file/s which match the input params

@@ -12,8 +12,6 @@ tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
 
 \item{type}{the specific type of data you want, occasionally optional:
 dealt, settlement, issuance, syndication, buyback, turnover,}
-
-\item{data.index}{internal data required to look up file to download}
 }
 \value{
 a list of downloaded files
