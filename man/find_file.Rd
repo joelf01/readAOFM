@@ -2,26 +2,29 @@
 % Please edit documentation in R/helper_functions.R
 \name{find_file}
 \alias{find_file}
-\title{Find name of file to download from AOFM}
+\title{Resolve internal AOFM table IDs from security and type arguments}
 \usage{
 find_file(security = NULL, type = NULL)
 }
 \arguments{
-\item{security}{object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
+\item{security}{Optional exact security family. Supported values include
+\code{summary}, \code{aggregate}, \code{tb}, \code{tib}, \code{tn}, \code{slf}, \code{ownership}, \code{retail},
+and \code{termpremium}.}
 
-\item{type}{the specific type of data you want, occasionally optional: dealt, settlement, issuance, syndication, buyback, turnover,}
+\item{type}{Optional exact table type. Supported values include \code{dealt},
+\code{settlement}, \code{issuance}, \code{syndication}, \code{buyback}, \code{turnover}, \code{public},
+and \code{nonresident}.}
 }
 \value{
-a vector with the file/s which match the input params
+A character vector of matching catalogue IDs. \code{NULL} is returned
+when there is no match. Multiple matches are printed and returned; the
+catalogue includes seven rows that have no parser and can therefore be
+downloaded only as raw workbooks.
 }
 \description{
-Find name of file to download from AOFM
+This internal helper performs a local lookup in the package catalogue. It
+does not download data or query the AOFM website. It is used by
+\code{\link[=download_aofm_xlsx]{download_aofm_xlsx()}}; users should generally start with \code{\link[=search_aofm]{search_aofm()}}
+or \code{\link[=read_aofm]{read_aofm()}} instead.
 }
-\examples{
-\dontrun{find_file("tb", "issuance")}
-# returns "tb_issuance"
-\dontrun{find_file("tb")}
-\dontrun{returns c("tb_issuance", "tb_syndication", "tb_turnover" .....)}
-\dontrun{find_file()}
-# returns vector of all filenames
-}
+\keyword{internal}

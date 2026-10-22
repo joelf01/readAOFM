@@ -2,21 +2,21 @@
 % Please edit documentation in R/helper_functions.R
 \name{browse_tables}
 \alias{browse_tables}
-\title{Show index of tables from the AOFM website}
+\title{Print the internal AOFM table index}
 \usage{
 browse_tables(x = aofm_index_nav)
 }
 \arguments{
-\item{x}{object you want data on, options include:
-tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium}
+\item{x}{An object to print. The default is the package's internal table
+index used to map \code{security} and \code{type} arguments to source workbooks.}
 }
 \value{
-dataframe with index of files and arguments to download them
+\code{x}, invisibly.
 }
 \description{
-Show index of tables from the AOFM website
+This is an internal helper used while developing and testing the package.
+It prints \code{x} and returns it invisibly; it does not download data or query
+the AOFM website. The public, user-facing catalogue search is
+\code{\link[=search_aofm]{search_aofm()}}.
 }
-\examples{
-\dontrun{download_aofm_xlsx()}
-# return dataframe with list of files/arguments
-}
+\keyword{internal}

@@ -1,0 +1,68 @@
+# Copyright and third-party material
+
+## readAOFM code and documentation
+
+Unless a more specific notice applies below, the readAOFM package source code
+and documentation are copyright © 2023–2026 joelf01 and are released
+under the MIT License in `LICENSE`.
+
+The MIT notice applies to the package's own code and documentation. It does
+not replace the terms of third-party material bundled with, or adapted in,
+the package.
+
+## Australian Office of Financial Management source material
+
+The packaged Excel snapshots in `inst/extdata/` and the related entries in the
+package's AOFM source catalogue are Commonwealth material published by the
+Australian Office of Financial Management (AOFM) Data Hub. The AOFM copyright
+notice states that AOFM material is provided under the Creative Commons
+Attribution 4.0 International licence, with exclusions for the Commonwealth
+Coat of Arms, the AOFM logo, trademarks, and content supplied by third parties:
+<https://www.aofm.gov.au/copyright>.
+
+Attribute these snapshots and source records to **Australian Office of
+Financial Management** and link to the applicable source. The package is an
+independent project; attribution must not imply Commonwealth or AOFM
+endorsement, sponsorship, or affiliation. Third-party rights may remain with
+their owners and may require separate permission. Check the current AOFM
+notice and source terms before redistributing or relying on a snapshot.
+
+The five packaged snapshots and their original acquisition URLs are listed
+below. These retired `/media/` routes are retained only as historical
+provenance for the exact bundled bytes; they are not the package's current
+runtime catalogue routes. Current direct Data Hub routes and byte comparisons
+are recorded in `inst/extdata/README.md`.
+
+* `tb_issuance.xlsx` — <https://www.aofm.gov.au/media/591>
+* `tb_position_dealt.xlsx` — <https://www.aofm.gov.au/media/578>
+* `tb_syndication.xlsx` — <https://www.aofm.gov.au/media/632>
+* `tib_issuance.xlsx` — <https://www.aofm.gov.au/media/429>
+* `tib_syndication.xlsx` — <https://www.aofm.gov.au/media/631>
+
+These AOFM workbooks and source records are not relicensed under the
+readAOFM MIT licence.
+
+The rendered Treasury Bond chart in `man/figures/` is derived from
+`tb_issuance.xlsx`. Its source caption attributes the Australian Office of
+Financial Management and the AOFM Data Hub. The underlying observations remain
+Commonwealth material under the terms and exclusions described above; the
+generated visualisation does not imply AOFM endorsement.
+
+## Adapted Stack Overflow snippets
+
+The internal helper `read_excel_allsheets()` in `R/helper_functions.R` is
+adapted from Jeromy Anglim's Stack Overflow answer
+<https://stackoverflow.com/a/12945838>, whose API metadata identifies the
+content licence as CC BY-SA 3.0. The helper may be rewritten in future, but
+this attribution remains for the current adapted implementation. An older
+source comment names Ralf Stubner; that comment does not replace this verified
+attribution.
+
+The internal predicate `not_all_na()` in `R/helper_functions.R` is adapted
+from the Stack Overflow answer by user zack
+<https://stackoverflow.com/a/50335187>, whose API metadata identifies the
+content licence as CC BY-SA 4.0. The predicate may be rewritten in future,
+but this attribution remains for the current adapted implementation.
+
+These notices preserve the applicable attribution and share-alike terms; they
+are not assertions that Stack Overflow contributors endorse readAOFM.

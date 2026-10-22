@@ -4,3 +4,19 @@
 .httr-oauth
 .DS_Store
 .quarto
+docs/
+
+# Local package-check and build output
+*.Rcheck/
+readAOFM.Rcheck/
+*.tar.gz
+readAOFM_*.tar.gz
+
+# Files created by readAOFM's opt-in output helpers
+data/
+output/
+
+# Disposable site and rendering output
+site/
+_site/
+pkgdown/

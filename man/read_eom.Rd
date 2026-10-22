@@ -2,31 +2,83 @@
 % Please edit documentation in R/individual_table_functions.R
 \name{read_eom}
 \alias{read_eom}
-\title{Reads in and cleans the "End of Month Positions" data from the AOFM, returns a list}
+\title{Read an AOFM end-of-month positions workbook}
 \usage{
-read_eom(aofm_table, csv = F)
+read_eom(
+  aofm_table,
+  csv = FALSE,
+  timeout = getOption("readAOFM.timeout", 30),
+  retries = getOption("readAOFM.retries", 1L),
+  max_bytes = getOption("readAOFM.max_bytes", 100 * 1024^2)
+)
 }
 \arguments{
-\item{aofm_table}{object to download, typically called from read_aofm()}
+\item{aofm_table}{One of \code{aggregate_position_dealt},
+\code{aggregate_position_settlement}, \code{tb_position_dealt},
+\code{tb_position_settlement}, \code{tib_position_dealt},
+\code{tib_position_settlement}, \code{tn_position_dealt}, or
+\code{tn_position_settlement}. It is normally selected through \code{\link[=read_aofm]{read_aofm()}}.}
 
-\item{csv}{do you want to export the cleaned data as a csv to /data}
+\item{csv}{Logical scalar (default \code{FALSE}). If \code{TRUE}, write one CSV per returned component
+to \verb{output/} beneath the current working directory.}
+
+\item{timeout}{Positive finite numeric scalar giving the per-attempt workbook
+transport timeout in seconds (default \code{getOption("readAOFM.timeout", 30)};
+maximum 300 seconds).}
+
+\item{retries}{Non-negative integer scalar giving the number of retries after
+the first workbook transport attempt (default
+\code{getOption("readAOFM.retries", 1L)}; maximum 5).}
+
+\item{max_bytes}{Positive finite numeric scalar giving the maximum accepted
+workbook size in bytes (default
+\code{getOption("readAOFM.max_bytes", 100 * 1024^2)}; maximum 1 GiB).}
 }
 \value{
-AOFM eom data is returned as a list with data frame elements for
-FaceValue, MarketValue, Delta, Duration and Tenor
+A named list with one tibble/data-frame component per non-Notes
+worksheet. Each component preserves workbook identity fields, adds \code{date}
+as a \code{Date}, and contains numeric \code{value} observations in long form.
+Treasury Bond, Treasury Indexed Bond, and Treasury Note components include
+a \code{Series} identifier where applicable. Component names are the stable table
+ID followed by the worksheet name, for example
+\code{tb_position_dealt_FaceValue}.
 }
 \description{
-Reads in and cleans the "End of Month Positions" data from the AOFM, returns a list
+\code{read_eom()} downloads and tidies one of the eight end-of-month position
+workbooks. It returns one named component for each non-Notes data worksheet.
+Current Treasury Bond and Treasury Indexed Bond workbooks provide
+\code{FaceValue}, \code{MarketValue}, \code{Delta}, \code{Duration}, and \code{Tenor} components;
+AOFM may add or remove worksheets, so callers should inspect the names of
+the returned list. For Treasury Bond, Treasury Indexed Bond, and Treasury
+Note tables, each component includes a \code{Series} identifier when repeated
+security identities occur. Dates are normalised to \code{Date} and measures to
+numeric values.
+}
+\details{
+The workbook is fetched over HTTPS without credentials and staged
+in a temporary file. Missing worksheets, rows, columns, or an incompatible
+AOFM layout cause an error; no managed cache is used. Transport has the
+public bounded timeout and size safeguards described above. Set \code{csv = TRUE}
+to write one CSV per component beneath \verb{output/} in the current working
+directory.
 }
 \examples{
-\dontrun{ read_eom("tb_position_dealt")}
-# downloads Treasury Bond EOM data on a dealt basis from the AOFM
-# returns cleaned in a long format
-# data is returned as a list with data frame elements for
-# FaceValue, MarketValue, Delta, Duration and Tenor
-\dontrun{read_eom("tb_position_settlement")}
-# downloads Treasury Bond EOM data on a settlement basis from the
-# AOFM, returns cleaned in a long format as a list with elements for each of
-# FaceValue, MarketValue, Delta, Duration and Tenor
+search_aofm("tb dealt")
 
+# This is a complete official snapshot with five long data worksheets;
+# run the offline parse interactively because it can take several seconds.
+fixture <- system.file("extdata", "tb_position_dealt.xlsx", package = "readAOFM")
+if (interactive() && requireNamespace("testthat", quietly = TRUE) && nzchar(fixture)) {
+  result <- suppressMessages(testthat::with_mocked_bindings(
+    read_eom("tb_position_dealt"),
+    download_aofm_table_workbook = function(...) fixture,
+    .package = "readAOFM"
+  ))
+  names(result)
+}
+
+}
+\seealso{
+\code{\link[=read_aofm]{read_aofm()}} for the preferred interface and \code{\link[=search_aofm]{search_aofm()}} for
+offline catalogue discovery.
 }

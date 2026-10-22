@@ -2,23 +2,71 @@
 % Please edit documentation in R/individual_table_functions.R
 \name{read_secondary}
 \alias{read_secondary}
-\title{Reads in and cleans data under "AGS Secondary Market Turnover" from the AOFM, returns cleaned in a long format}
+\title{Read AOFM secondary-market turnover}
 \usage{
-read_secondary(aofm_table, csv = F)
+read_secondary(
+  aofm_table,
+  csv = FALSE,
+  timeout = getOption("readAOFM.timeout", 30),
+  retries = getOption("readAOFM.retries", 1L),
+  max_bytes = getOption("readAOFM.max_bytes", 100 * 1024^2)
+)
 }
 \arguments{
-\item{aofm_table}{object to download, typically called from read_aofm()}
+\item{aofm_table}{Either \code{tb_turnover} or \code{tib_turnover}. It is normally
+selected through \code{\link[=read_aofm]{read_aofm()}}.}
 
-\item{csv}{do you want to export the cleaned data as a csv to /data}
+\item{csv}{Logical scalar (default \code{FALSE}). If \code{TRUE}, write the parsed result to
+\verb{output/<aofm_table>.csv} beneath the current working directory.}
+
+\item{timeout}{Positive finite numeric scalar giving the per-attempt workbook
+transport timeout in seconds (default \code{getOption("readAOFM.timeout", 30)};
+maximum 300 seconds).}
+
+\item{retries}{Non-negative integer scalar giving the number of retries after
+the first workbook transport attempt (default
+\code{getOption("readAOFM.retries", 1L)}; maximum 5).}
+
+\item{max_bytes}{Positive finite numeric scalar giving the maximum accepted
+workbook size in bytes (default
+\code{getOption("readAOFM.max_bytes", 100 * 1024^2)}; maximum 1 GiB).}
 }
 \value{
-AOFM Transactional data as a dataframe
+A tibble/data frame in long form with \code{period} as a \code{Date}, \code{group}
+in \code{tenor}, \code{investor_type}, \code{security}, \code{region}, or \code{counterparty}, and
+\code{name}/\code{value} columns for numeric turnover measures. Rows are ordered by
+the natural key \code{period}, \code{group}, and \code{name}. Attribute \code{aofm_sources} is a
+two-record named list with \code{historical} and \code{current} records. Each record
+includes \code{schema_version}, \code{table_id}, \code{role}, \code{source_url}, URL-decoded
+\code{source_filename}, \code{raw_sha256}, \code{raw_bytes}, and UTC \code{retrieved_at}.
 }
 \description{
-Reads in and cleans data under "AGS Secondary Market Turnover" from the AOFM, returns cleaned in a long format
+\code{read_secondary()} downloads and parses both official turnover sources for
+Treasury Bonds or Treasury Indexed Bonds. It retains the historical
+\code{tenor} and \code{investor_type} groups, adds the redesigned current \code{security},
+\code{region}, and \code{counterparty} groups, and returns one continuous result.
+Workbooks are fetched over HTTPS without credentials and staged in temporary
+files; the package does not use the managed cache unless
+\code{\link[=download_aofm_file]{download_aofm_file()}} is called explicitly.
+}
+\details{
+The historical workbooks cover July 2016 through December 2025.
+Their \verb{By Tenor} observations are monthly and \verb{By Category} observations
+are quarterly. Redesigned current workbooks begin with monthly January
+2026 observations. AOFM publishes updates quarterly with a two-month lag.
+The sources are joined on \code{period}, \code{group}, and \code{name}; current-source
+rows take precedence on an overlap and duplicate natural keys cause an
+error. Missing sheets, periods, or changed workbook layouts also error.
 }
 \examples{
-\dontrun{read_secondary("tb_turnover")}
-# downloads Treasury Bond Turnover data from the AOFM, returns cleaned in a long format
+search_aofm("secondary market turnover")
 
+if (interactive()) {
+  read_secondary("tb_turnover")
+}
+
+}
+\seealso{
+\code{\link[=read_aofm]{read_aofm()}} for the preferred interface and \code{\link[=search_aofm]{search_aofm()}} for
+offline catalogue discovery.
 }

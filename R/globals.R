@@ -1,0 +1,25 @@
+if (getRversion() >= "2.15.1") {
+  utils::globalVariables(
+    c(
+      ".",
+      "V1",
+      "V2",
+      "date_held",
+      "date_settled",
+      "end_date",
+      "file.save",
+      "group",
+      "maturity",
+      "name",
+      "p.security",
+      "p.type",
+      "period",
+      "pricing_date",
+      "security_maturity_date",
+      "settle_date",
+      "settlement_date",
+      "start_date",
+      "value"
+    )
+  )
+}

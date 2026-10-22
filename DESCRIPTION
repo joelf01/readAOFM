@@ -1,27 +1,43 @@
 Package: readAOFM
-Title: Reads data from the AOFM's dataHub
-Version: 0.0.0.9000
-Authors@R: 
-    person("joelf01", email = "63056891+joelf01@users.noreply.github.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Downloads, imports, and tidies time series data from the Australian Office of Financial Mnagement DataHub.
+Title: Read and Tidy Australian Office of Financial Management Data
+Version: 0.1.1
+Authors@R:
+    person(given = "joelf01", email = "63056891+joelf01@users.noreply.github.com",
+           role = c("aut", "cre", "cph"))
+Description: Downloads, imports, and tidies time-series workbooks published
+    by the Australian Office of Financial Management (AOFM) Data Hub
+    <https://www.aofm.gov.au/data-hub>.
+    Provides a consistent interface to search the local catalogue, retrieve
+    source workbooks, and parse Australian Government Securities issuance,
+    transaction, position, ownership, turnover, and term-premium data into
+    long-form data frames or named lists.
 License: MIT + file LICENSE
+URL: https://joelf01.github.io/readAOFM/,
+    https://github.com/joelf01/readAOFM
+BugReports: https://github.com/joelf01/readAOFM/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
+Depends:
+    R (>= 4.1.0)
 Imports:
-    tidyr,
-    dplyr,
-    here,
-    httr,
-    readxl,
-    zoo,
+    curl,
+    digest,
     data.table,
+    dplyr (>= 1.0.0),
     janitor,
-    stringr,
     readr,
-    stats
+    readxl,
+    stats,
+    tidyr (>= 1.0.0),
+    zoo
 Suggests:
-    ggplot2
-Depends: 
-    R (>= 2.10)
+    ggplot2,
+    knitr,
+    pkgdown,
+    rmarkdown,
+    testthat (>= 3.1.4),
+    withr
+VignetteBuilder: knitr
+Config/Needs/website: pkgdown
+Config/testthat/edition: 3

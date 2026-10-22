@@ -1,11 +1,14 @@
-#' Show index of tables from the AOFM website
+#' Print the internal AOFM table index
 #'
-#' @param x object you want data on, options include:
-#' tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
-#' @returns dataframe with index of files and arguments to download them
-#' @examples
-#' \dontrun{download_aofm_xlsx()}
-#' # return dataframe with list of files/arguments
+#' This is an internal helper used while developing and testing the package.
+#' It prints `x` and returns it invisibly; it does not download data or query
+#' the AOFM website. The public, user-facing catalogue search is
+#' [search_aofm()].
+#'
+#' @param x An object to print. The default is the package's internal table
+#'   index used to map `security` and `type` arguments to source workbooks.
+#' @returns `x`, invisibly.
+#' @keywords internal
 
 browse_tables <- function(x = aofm_index_nav){
   print(x)
@@ -14,15 +17,23 @@ browse_tables <- function(x = aofm_index_nav){
 
 
 
-#' Read multiple excel sheet to a list object, cc Ralf Stubner on StackOverflow
+#' Read every worksheet in a local Excel workbook
 #'
-#' @param filename The file path to the .xlsx from which you want to pull all sheets
-#' @param tibble we always leave as false
-#' @returns list object with dataframe for each sheet
+#' This internal helper reads each worksheet with [readxl::read_excel()] and
+#' names the resulting list with the workbook's sheet names. It does not make
+#' a network request. The package's public readers additionally normalise the
+#' returned worksheets into long-form observations.
+#'
+#' @param filename Path to a local `.xls` or `.xlsx` workbook.
+#' @param tibble If `FALSE` (the default), coerce each worksheet to a base
+#'   data frame. If `TRUE`, retain the tibble returned by
+#'   [readxl::read_excel()].
+#' @returns A named list with one data-frame or tibble element per worksheet.
+#' @keywords internal
 
 read_excel_allsheets <- function(filename, tibble = FALSE) {
   sheets <- readxl::excel_sheets(filename)
-  x <- lapply(sheets, function(X) readxl::read_excel(filename, sheet = X))
+  x <- lapply(sheets, function(X) suppressWarnings(readxl::read_excel(filename, sheet = X)))
   if(!tibble) x <- lapply(x, as.data.frame)
   names(x) <- sheets
   x
@@ -32,10 +43,15 @@ read_excel_allsheets <- function(filename, tibble = FALSE) {
 
 
 
-#' Select columns which dont have all NA values, cc zack on StackOverflow
+#' Test whether an object contains at least one non-missing value
 #'
-#' @param x dataframe object
-#' @returns columns which are not ONLY NA values
+#' This internal predicate is used to drop columns that are entirely `NA`
+#' while parsing transactional workbooks.
+#'
+#' @param x An atomic vector, matrix, or data-frame column to inspect.
+#' @returns A length-one logical value: `TRUE` when at least one element of
+#'   `x` is not `NA`, otherwise `FALSE`.
+#' @keywords internal
 
 
 not_all_na <- function(x) any(!is.na(x))
@@ -46,18 +62,24 @@ not_all_na <- function(x) any(!is.na(x))
 
 
 
-#' Find name of file to download from AOFM
+#' Resolve internal AOFM table IDs from security and type arguments
 #'
-#' @param security object you want data on, options include: tb, tib, tn, slf, summary, aggregate, ownership, retail, termpremium
-#' @param type the specific type of data you want, occasionally optional: dealt, settlement, issuance, syndication, buyback, turnover,
-#' @returns a vector with the file/s which match the input params
-#' @examples
-#' \dontrun{find_file("tb", "issuance")}
-#' # returns "tb_issuance"
-#' \dontrun{find_file("tb")}
-#' \dontrun{returns c("tb_issuance", "tb_syndication", "tb_turnover" .....)}
-#' \dontrun{find_file()}
-#' # returns vector of all filenames
+#' This internal helper performs a local lookup in the package catalogue. It
+#' does not download data or query the AOFM website. It is used by
+#' [download_aofm_xlsx()]; users should generally start with [search_aofm()]
+#' or [read_aofm()] instead.
+#'
+#' @param security Optional exact security family. Supported values include
+#'   `summary`, `aggregate`, `tb`, `tib`, `tn`, `slf`, `ownership`, `retail`,
+#'   and `termpremium`.
+#' @param type Optional exact table type. Supported values include `dealt`,
+#'   `settlement`, `issuance`, `syndication`, `buyback`, `turnover`, `public`,
+#'   and `nonresident`.
+#' @returns A character vector of matching catalogue IDs. `NULL` is returned
+#'   when there is no match. Multiple matches are printed and returned; the
+#'   catalogue includes seven rows that have no parser and can therefore be
+#'   downloaded only as raw workbooks.
+#' @keywords internal
 
 
 find_file <- function(security = NULL ## options include; tb, tib, tn, slf, summary, aggregate, ownership, retail, term.premium
@@ -90,4 +112,3 @@ find_file <- function(security = NULL ## options include; tb, tib, tn, slf, summ
   }
 
 }
-

@@ -2,23 +2,67 @@
 % Please edit documentation in R/individual_table_functions.R
 \name{read_syndication}
 \alias{read_syndication}
-\title{Reads in and cleans Syndication details data under "Transaction Details" from the AOFM, returns cleaned in a long format}
+\title{Read AOFM syndication details}
 \usage{
-read_syndication(aofm_table, csv = F)
+read_syndication(
+  aofm_table,
+  csv = FALSE,
+  timeout = getOption("readAOFM.timeout", 30),
+  retries = getOption("readAOFM.retries", 1L),
+  max_bytes = getOption("readAOFM.max_bytes", 100 * 1024^2)
+)
 }
 \arguments{
-\item{aofm_table}{object to download, typically called from read_aofm()}
+\item{aofm_table}{Either \code{tb_syndication} or \code{tib_syndication}. It is
+normally selected through \code{\link[=read_aofm]{read_aofm()}}.}
 
-\item{csv}{do you want to export the cleaned data as a csv to /data}
+\item{csv}{Logical scalar (default \code{FALSE}). If \code{TRUE}, write the parsed result to
+\verb{output/<aofm_table>.csv} beneath the current working directory.}
+
+\item{timeout}{Positive finite numeric scalar giving the per-attempt workbook
+transport timeout in seconds (default \code{getOption("readAOFM.timeout", 30)};
+maximum 300 seconds).}
+
+\item{retries}{Non-negative integer scalar giving the number of retries after
+the first workbook transport attempt (default
+\code{getOption("readAOFM.retries", 1L)}; maximum 5).}
+
+\item{max_bytes}{Positive finite numeric scalar giving the maximum accepted
+workbook size in bytes (default
+\code{getOption("readAOFM.max_bytes", 100 * 1024^2)}; maximum 1 GiB).}
 }
 \value{
-AOFM Transactional data as a dataframe
+A tibble/data frame with source identifier columns, \code{pricing_date}
+and \code{settlement_date} as \code{Date} values where present, a \code{type} identifying
+\code{new_bond} or \code{tap}, and long-form \code{name} and numeric \code{value} columns. Exact
+source fields follow the current AOFM workbook.
 }
 \description{
-Reads in and cleans Syndication details data under "Transaction Details" from the AOFM, returns cleaned in a long format
+\code{read_syndication()} reads the syndicated-issue workbooks for Treasury Bonds
+or Treasury Indexed Bonds. It downloads over HTTPS without credentials,
+stages the workbook in a temporary file, and combines the source sheets into
+a single long-form result. No managed cache is used; the public timeout,
+retry, and workbook-size safeguards are applied.
+}
+\details{
+Notes worksheets are excluded. Empty files, missing required date
+fields or value columns, and changed source layouts cause an error.
 }
 \examples{
-\dontrun{read_transactional("tb_syndication")}
-# downloads Treasury Bond Syndication details data from the AOFM, returns cleaned in a long format
+search_aofm("tb syndication")
 
+fixture <- system.file("extdata", "tb_syndication.xlsx", package = "readAOFM")
+if (requireNamespace("testthat", quietly = TRUE) && nzchar(fixture)) {
+  result <- suppressMessages(testthat::with_mocked_bindings(
+    read_syndication("tb_syndication"),
+    download_aofm_table_workbook = function(...) fixture,
+    .package = "readAOFM"
+  ))
+  head(result[c("pricing_date", "type", "name", "value")])
+}
+
+}
+\seealso{
+\code{\link[=read_aofm]{read_aofm()}} for the preferred interface and \code{\link[=search_aofm]{search_aofm()}} for
+offline catalogue discovery.
 }

@@ -2,25 +2,72 @@
 % Please edit documentation in R/individual_table_functions.R
 \name{read_transactional}
 \alias{read_transactional}
-\title{Reads in and cleans data under "Transaction Details" from the AOFM, returns cleaned in a long format (excl. issunace via conversion and syndication details)}
+\title{Read a transactional AOFM workbook}
 \usage{
-read_transactional(aofm_table, csv = F)
+read_transactional(
+  aofm_table,
+  csv = FALSE,
+  timeout = getOption("readAOFM.timeout", 30),
+  retries = getOption("readAOFM.retries", 1L),
+  max_bytes = getOption("readAOFM.max_bytes", 100 * 1024^2)
+)
 }
 \arguments{
-\item{aofm_table}{object to download, typically called from read_aofm()}
+\item{aofm_table}{One of \code{tb_issuance}, \code{tb_buyback}, \code{tib_issuance},
+\code{tib_buyback}, \code{tn_issuance}, \code{retail}, or \code{slf}. It is normally selected
+through \code{\link[=read_aofm]{read_aofm()}}.}
 
-\item{csv}{do you want to export the cleaned data as a csv to /data}
+\item{csv}{Logical scalar (default \code{FALSE}). If \code{TRUE}, write the parsed result to
+\verb{output/<aofm_table>.csv} beneath the current working directory.}
+
+\item{timeout}{Positive finite numeric scalar giving the per-attempt workbook
+transport timeout in seconds (default \code{getOption("readAOFM.timeout", 30)};
+maximum 300 seconds).}
+
+\item{retries}{Non-negative integer scalar giving the number of retries after
+the first workbook transport attempt (default
+\code{getOption("readAOFM.retries", 1L)}; maximum 5).}
+
+\item{max_bytes}{Positive finite numeric scalar giving the maximum accepted
+workbook size in bytes (default
+\code{getOption("readAOFM.max_bytes", 100 * 1024^2)}; maximum 1 GiB).}
 }
 \value{
-AOFM Transactional data as a dataframe
+A tibble/data frame in long form. Workbook identifier columns are
+retained; numeric measures are represented by \code{name} and \code{value}. Known
+date fields such as \code{date_held}, \code{date_settled}, \code{maturity}, \code{settle_date},
+\code{start_date}, \code{end_date}, and \code{security_maturity_date} are normalised to
+\code{Date} where present. Exact measures and identifier columns follow the
+current source workbook.
 }
 \description{
-Reads in and cleans data under "Transaction Details" from the AOFM, returns cleaned in a long format (excl. issunace via conversion and syndication details)
+\code{read_transactional()} handles tender, buyback, retail-facility, and
+securities-lending workbooks. It downloads the selected workbook over HTTPS
+without credentials, stages it in a temporary file, and pivots numeric
+measures into long form. The package does not use the managed cache unless
+\code{\link[=download_aofm_file]{download_aofm_file()}} is called explicitly and applies the public bounded
+timeout and size safeguards described in \code{\link[=read_aofm]{read_aofm()}}.
+}
+\details{
+Empty files, missing required columns, non-workbook responses, and
+changed AOFM layouts cause an error. Missing measure values are omitted by
+the parser.
 }
 \examples{
-\dontrun{read_transactional("tb_issunace")}
-# downloads Treasury Bond Issunace data from the AOFM, returns cleaned in a long format
-\dontrun{read_transactional("slf")}
-# downloads Securities Lending Facility data from the AOFM, returns cleaned in a long format
+search_aofm("tb issuance")
 
+fixture <- system.file("extdata", "tb_issuance.xlsx", package = "readAOFM")
+if (requireNamespace("testthat", quietly = TRUE) && nzchar(fixture)) {
+  result <- suppressMessages(testthat::with_mocked_bindings(
+    read_transactional("tb_issuance"),
+    download_aofm_table_workbook = function(...) fixture,
+    .package = "readAOFM"
+  ))
+  head(result[c("date_held", "name", "value")])
+}
+
+}
+\seealso{
+\code{\link[=read_aofm]{read_aofm()}} for the preferred interface and \code{\link[=search_aofm]{search_aofm()}} for
+offline catalogue discovery.
 }

@@ -1,0 +1,209 @@
+---
+title: "Table catalog and data sources"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Table catalog and data sources}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+`readAOFM` ships a local catalogue that maps AOFM Data Hub workbooks to search
+terms, public selectors, parser families, and direct HTTPS source routes. This
+article records the 23 parser-supported entries and the seven raw-only /
+unsupported entries available through raw workbook download. Reader calls
+retrieve current source workbooks; the catalogue itself supplies stable,
+offline discovery metadata.
+
+## The 23 parsed tables
+
+The public selectors are exact. The table below is deliberately explicit so
+that the table ID, family, and corresponding `read_aofm()` call are visible in
+one place. The validation column is computed with `search_aofm()`, which is an
+offline catalogue operation.
+
+```{r parsed-catalog}
+parsed_catalog <- data.frame(
+  family = c(
+    "End-of-financial-year summary",
+    rep("End-of-month positions", 8),
+    rep("Transactional issuance and buybacks", 7),
+    rep("Syndication details", 2),
+    rep("Ownership", 2),
+    rep("Secondary-market turnover", 2),
+    "Term premium"
+  ),
+  security = c(
+    "summary",
+    "aggregate", "aggregate", "tb", "tb", "tib", "tib", "tn", "tn",
+    "tb", "tb", "tib", "tib", "tn", "retail", "slf",
+    "tb", "tib",
+    "ownership", "ownership",
+    "tb", "tib",
+    "termpremium"
+  ),
+  type = c(
+    NA_character_,
+    "dealt", "settlement", "dealt", "settlement", "dealt", "settlement",
+    "dealt", "settlement",
+    "issuance", "buyback", "issuance", "buyback", "issuance", NA, NA,
+    "syndication", "syndication",
+    "public", "nonresident",
+    "turnover", "turnover",
+       NA_character_
+  ),
+  id = c(
+    "summary",
+    "aggregate_position_dealt", "aggregate_position_settlement",
+    "tb_position_dealt", "tb_position_settlement",
+    "tib_position_dealt", "tib_position_settlement",
+    "tn_position_dealt", "tn_position_settlement",
+    "tb_issuance", "tb_buyback", "tib_issuance", "tib_buyback",
+    "tn_issuance", "retail", "slf",
+    "tb_syndication", "tib_syndication",
+    "ownership_public", "ownership_nonresident",
+    "tb_turnover", "tib_turnover",
+    "termpremium"
+  ),
+  stringsAsFactors = FALSE
+)
+
+parsed_catalog$selector <- ifelse(
+  is.na(parsed_catalog$type),
+  sprintf('read_aofm("%s")', parsed_catalog$security),
+  sprintf(
+    'read_aofm("%s", "%s")',
+    parsed_catalog$security,
+    parsed_catalog$type
+  )
+)
+
+parsed_catalog$catalog_match <- vapply(seq_len(nrow(parsed_catalog)), function(i) {
+  query <- if (is.na(parsed_catalog$type[[i]])) {
+    parsed_catalog$security[[i]]
+  } else {
+    paste(parsed_catalog$security[[i]], parsed_catalog$type[[i]])
+  }
+  parsed_catalog$id[[i]] %in% readAOFM::search_aofm(query)$id
+}, logical(1))
+
+stopifnot(nrow(parsed_catalog) == 23L, all(parsed_catalog$catalog_match))
+parsed_catalog[, c("family", "id", "selector")]
+```
+
+The same catalogue can be searched with user-facing terms. These calls are
+local and return metadata only because `read = FALSE` is the default:
+
+```{r family-search}
+readAOFM::search_aofm("treasury bond")[, c("id", "read_call")]
+readAOFM::search_aofm("inflation")[, c("id", "read_call")]
+readAOFM::search_aofm("secondary market")[, c("id", "read_call")]
+```
+
+## Raw-only workbook catalogue entries
+
+The following seven catalogue IDs are available through the raw workbook
+download path while the parser-supported workflow focuses on the 23 entries
+above. They remain explicit catalogue rows with `supported = FALSE`, not
+additional parser families:
+
+```{r raw-only}
+raw_only_ids <- c(
+  "tb_issuance_conversion",
+  "indexation_factors",
+  "rmbs_transactions",
+  "rmbs_auctions",
+  "interest_rate_swaps",
+  "cross_currency_swaps",
+  "portfolio_overview"
+)
+
+raw_only <- data.frame(
+  id = raw_only_ids,
+  parser = NA_character_,
+  access = "download_aofm_xlsx()",
+  stringsAsFactors = FALSE
+)
+
+# This check reads package metadata only. It does not download a workbook;
+# users should use search_aofm() rather than this internal object.
+catalog_metadata <- get("aofm_index", envir = asNamespace("readAOFM"))
+stopifnot(
+  setequal(raw_only_ids, catalog_metadata$id[catalog_metadata$fn == "no function exists"]),
+  all(catalog_metadata$fn[catalog_metadata$id %in% raw_only_ids] == "no function exists")
+)
+raw_only
+```
+
+The complete map is available without contacting AOFM:
+
+```{r complete-catalog}
+all_catalogue <- readAOFM::aofm_catalog(include_unsupported = TRUE)
+stopifnot(
+  nrow(all_catalogue) == 30L,
+  sum(all_catalogue$supported) == 23L,
+  all(grepl("^https://www\\.aofm\\.gov\\.au/sites/default/files/", all_catalogue$source_url)),
+  all(!grepl("/media/", all_catalogue$source_url, fixed = TRUE))
+)
+all_catalogue[!all_catalogue$supported,
+              c("table_id", "source_url", "file_name", "supported")]
+```
+
+The raw-only source filenames remain extension-compatible with their direct
+routes, including the legacy `.xls` files. `portfolio_overview` is a verified
+historical direct workbook that is not currently listed on the Data Hub; it is
+retained as raw-only and is not presented as current or parser-supported.
+
+`download_aofm_xlsx()` is the public raw-workbook helper. Its selectors are
+the `security` and `type` values shown for parsed rows. The raw-only rows have
+no parser and no public `read_aofm()` call; because their selector fields are
+not populated, an unfiltered raw download is the available public route and
+will also select other catalogue workbooks. The function writes files beneath
+`data/` in the working directory and performs a live HTTPS request, so this
+article does not run it automatically.
+
+## Source access and scope
+
+The public AOFM Data Hub provides these workbooks without a package username,
+password, or API key. `search_aofm()` performs local discovery. Reader and raw
+download calls request the workbook URL recorded in the package catalogue over
+HTTPS, stage it in a temporary file (readers), or save it beneath `data/` (raw
+downloads). Each call retrieves the current source rather than using a
+persistent package cache. The opt-in `download_aofm_file()` API instead keeps a
+verified, content-addressed workbook and metadata beneath the caller-selected
+`.readAOFM/data/<table-id>/` root; `aofm_file_metadata()` and
+`read_aofm_file()` inspect and parse local files without network access.
+
+Readers and raw downloads accept `timeout`, `retries`, and `max_bytes` controls
+(30 seconds, one retry, and 100 MiB by default). Managed downloads additionally
+bound cache age, file count, total bytes, and lock wait time. These controls
+keep network and filesystem work explicit and finite for scripts, tests, and
+CRAN builds.
+
+AOFM controls workbook URLs, sheet names, columns, and historical coverage.
+Turnover observation periods and publication cadence are separate: current
+turnover workbooks contain monthly observations, the Data Hub update is
+quarterly with an approximately two-month lag, historical **By Tenor** is
+monthly, and historical **By Category** is quarterly. The historical turnover
+companions end in December 2025 and the redesigned current workbooks begin in
+January 2026. `read_secondary()` joins them by `period`, `group`, and `name`,
+uses current rows for overlaps, rejects duplicate keys, and attaches the two
+source records as `aofm_sources`. The groups are `tenor`, `investor_type`,
+`security`, `region`, and `counterparty`.
+
+The continuity CSV retains `legacy_max = 2024-12-31` as the boundary of the
+pinned retired-baseline comparison. The replacement historical workbook
+extends through `2025-12-31`; together with the current `2026-01-31` onward
+workbook it provides the documented no-gap transition. The packaged workbook
+snapshots used by tests and vignettes are deterministic examples, not a
+replacement for the live AOFM source or a runtime cache. A changed URL, HTML
+error page, unavailable source, or changed workbook layout can therefore make
+a read fail; report the table ID, selector, error text, and access date.

@@ -2,16 +2,19 @@
 % Please edit documentation in R/helper_functions.R
 \name{not_all_na}
 \alias{not_all_na}
-\title{Select columns which dont have all NA values, cc zack on StackOverflow}
+\title{Test whether an object contains at least one non-missing value}
 \usage{
 not_all_na(x)
 }
 \arguments{
-\item{x}{dataframe object}
+\item{x}{An atomic vector, matrix, or data-frame column to inspect.}
 }
 \value{
-columns which are not ONLY NA values
+A length-one logical value: \code{TRUE} when at least one element of
+\code{x} is not \code{NA}, otherwise \code{FALSE}.
 }
 \description{
-Select columns which dont have all NA values, cc zack on StackOverflow
+This internal predicate is used to drop columns that are entirely \code{NA}
+while parsing transactional workbooks.
 }
+\keyword{internal}

@@ -2,22 +2,63 @@
 % Please edit documentation in R/individual_table_functions.R
 \name{read_ownership}
 \alias{read_ownership}
-\title{Reads in and cleans data under "Ownership of Australia Government Securities" from the AOFM, returns cleaned in a long format}
+\title{Read AOFM ownership of Australian Government Securities}
 \usage{
-read_ownership(aofm_table, csv = F)
+read_ownership(
+  aofm_table,
+  csv = FALSE,
+  timeout = getOption("readAOFM.timeout", 30),
+  retries = getOption("readAOFM.retries", 1L),
+  max_bytes = getOption("readAOFM.max_bytes", 100 * 1024^2)
+)
 }
 \arguments{
-\item{aofm_table}{object to download, typically called from read_aofm()}
+\item{aofm_table}{Either \code{ownership_public} or \code{ownership_nonresident}. It is
+normally selected through \code{\link[=read_aofm]{read_aofm()}}.}
 
-\item{csv}{do you want to export the cleaned data as a csv to /data}
+\item{csv}{Logical scalar (default \code{FALSE}). If \code{TRUE}, write one CSV per returned worksheet
+beneath \verb{output/} in the current working directory.}
+
+\item{timeout}{Positive finite numeric scalar giving the per-attempt workbook
+transport timeout in seconds (default \code{getOption("readAOFM.timeout", 30)};
+maximum 300 seconds).}
+
+\item{retries}{Non-negative integer scalar giving the number of retries after
+the first workbook transport attempt (default
+\code{getOption("readAOFM.retries", 1L)}; maximum 5).}
+
+\item{max_bytes}{Positive finite numeric scalar giving the maximum accepted
+workbook size in bytes (default
+\code{getOption("readAOFM.max_bytes", 100 * 1024^2)}; maximum 1 GiB).}
 }
 \value{
-AOFM ownership data as a list, with elements relating to sheets in the original file
+A named list of data frames. Public ownership returns the first two
+source worksheets; non-resident ownership returns source worksheets two
+through four. Each component preserves its source identity columns and
+contains \code{date} as a \code{Date} plus numeric \code{value} observations in long form.
+Component names combine the table ID and source worksheet name.
 }
 \description{
-Reads in and cleans data under "Ownership of Australia Government Securities" from the AOFM, returns cleaned in a long format
+\code{read_ownership()} reads the public register or non-resident holdings
+workbook and returns one long-form data frame per source worksheet. It
+downloads over HTTPS without credentials and stages the workbook in a
+temporary file; the package does not use the managed cache unless
+\code{\link[=download_aofm_file]{download_aofm_file()}} is called explicitly. The public timeout, retry, and
+workbook-size safeguards are applied.
+}
+\details{
+Missing sheets, rows, columns, or changed source layouts cause an
+error. The exact identity columns follow the current AOFM workbook.
 }
 \examples{
-\dontrun{read_ownership("ownership_nonresident")}
+search_aofm("foreign ownership")
 
+if (interactive()) {
+  read_ownership("ownership_nonresident")
+}
+
+}
+\seealso{
+\code{\link[=read_aofm]{read_aofm()}} for the preferred interface and \code{\link[=search_aofm]{search_aofm()}} for
+offline catalogue discovery.
 }

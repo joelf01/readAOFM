@@ -2,18 +2,24 @@
 % Please edit documentation in R/helper_functions.R
 \name{read_excel_allsheets}
 \alias{read_excel_allsheets}
-\title{Read multiple excel sheet to a list object, cc Ralf Stubner on StackOverflow}
+\title{Read every worksheet in a local Excel workbook}
 \usage{
 read_excel_allsheets(filename, tibble = FALSE)
 }
 \arguments{
-\item{filename}{The file path to the .xlsx from which you want to pull all sheets}
+\item{filename}{Path to a local \code{.xls} or \code{.xlsx} workbook.}
 
-\item{tibble}{we always leave as false}
+\item{tibble}{If \code{FALSE} (the default), coerce each worksheet to a base
+data frame. If \code{TRUE}, retain the tibble returned by
+\code{\link[readxl:read_excel]{readxl::read_excel()}}.}
 }
 \value{
-list object with dataframe for each sheet
+A named list with one data-frame or tibble element per worksheet.
 }
 \description{
-Read multiple excel sheet to a list object, cc Ralf Stubner on StackOverflow
+This internal helper reads each worksheet with \code{\link[readxl:read_excel]{readxl::read_excel()}} and
+names the resulting list with the workbook's sheet names. It does not make
+a network request. The package's public readers additionally normalise the
+returned worksheets into long-form observations.
 }
+\keyword{internal}

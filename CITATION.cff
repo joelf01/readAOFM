@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use readAOFM, please cite it using the metadata below."
+type: software
+title: "readAOFM: Read and Tidy Australian Office of Financial Management Data"
+version: 0.1.1
+authors:
+  - family-names: joelf01
+repository-code: "https://github.com/joelf01/readAOFM"
+url: "https://joelf01.github.io/readAOFM/"
+license: MIT

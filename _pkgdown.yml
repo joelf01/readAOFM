@@ -1,0 +1,74 @@
+url: https://joelf01.github.io/readAOFM/
+
+template:
+  bootstrap: 5
+  includes:
+    in_header: <meta name="google-site-verification" content="0UYFbCWPcIUQS3dci9qmQqKvSXMaS8jTuulSx_dipoU" />
+
+home:
+  title: readAOFM
+  description: Discover, retrieve, and parse AOFM Data Hub time series in R.
+  links:
+  - text: AOFM Data Hub
+    href: https://www.aofm.gov.au/data-hub
+  - text: GitHub repository
+    href: https://github.com/joelf01/readAOFM
+
+navbar:
+  structure:
+    left:
+    - intro
+    - articles
+    - reference
+    - news
+    right:
+    - github
+  components:
+    intro:
+      text: Overview
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    github:
+      icon: fa-github
+      aria-label: GitHub repository
+      href: https://github.com/joelf01/readAOFM
+
+articles:
+- title: User guides
+  contents:
+  - getting-started
+  - table-catalog
+  - network-outputs-troubleshooting
+
+reference:
+- title: Start here
+  contents:
+  - readAOFM-package
+  - read_aofm
+  - search_aofm
+  - aofm_catalog
+
+- title: Download raw workbooks
+  contents:
+  - download_aofm_xlsx
+  - download_aofm_file
+  - aofm_file_metadata
+  - read_aofm_file
+
+- title: Positions and holdings
+  contents:
+  - read_eofy
+  - read_eom
+
+- title: Transactions and market activity
+  contents:
+  - read_transactional
+  - read_syndication
+  - read_secondary
+
+- title: Ownership and term premium
+  contents:
+  - read_ownership
+  - read_premium

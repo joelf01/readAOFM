@@ -2,23 +2,60 @@
 % Please edit documentation in R/individual_table_functions.R
 \name{read_premium}
 \alias{read_premium}
-\title{Reads in and cleans data under "Term Premium Estimates" from the AOFM, returns cleaned in a long format}
+\title{Read AOFM term-premium estimates}
 \usage{
-read_premium(aofm_table, csv = F)
+read_premium(
+  aofm_table,
+  csv = FALSE,
+  timeout = getOption("readAOFM.timeout", 30),
+  retries = getOption("readAOFM.retries", 1L),
+  max_bytes = getOption("readAOFM.max_bytes", 100 * 1024^2)
+)
 }
 \arguments{
-\item{aofm_table}{object to download, typically called from read_aofm()}
+\item{aofm_table}{Must be the catalogue ID \code{termpremium}. It is normally
+selected through \code{\link[=read_aofm]{read_aofm()}}.}
 
-\item{csv}{do you want to export the cleaned data as a csv to /data}
+\item{csv}{Logical scalar (default \code{FALSE}). If \code{TRUE}, write the parsed result to
+\code{output/termpremium.csv} beneath the current working directory.}
+
+\item{timeout}{Positive finite numeric scalar giving the per-attempt workbook
+transport timeout in seconds (default \code{getOption("readAOFM.timeout", 30)};
+maximum 300 seconds).}
+
+\item{retries}{Non-negative integer scalar giving the number of retries after
+the first workbook transport attempt (default
+\code{getOption("readAOFM.retries", 1L)}; maximum 5).}
+
+\item{max_bytes}{Positive finite numeric scalar giving the maximum accepted
+workbook size in bytes (default
+\code{getOption("readAOFM.max_bytes", 100 * 1024^2)}; maximum 1 GiB).}
 }
 \value{
-AOFM Transactional data as a dataframe
+A tibble/data frame sorted by \code{date}, with \code{date} as a \code{Date},
+\code{type} identifying the source worksheet, and long-form \code{name} and \code{value}
+columns. Exact measures follow the current AOFM workbook.
 }
 \description{
-Reads in and cleans data under "Term Premium Estimates" from the AOFM, returns cleaned in a long format
+\code{read_premium()} downloads the \code{termpremium} workbook and combines its two
+source worksheets into a date-sorted long-form result. The source is fetched
+over HTTPS without credentials and staged in a temporary file; no managed
+cache is used. The public timeout, retry, and workbook-size safeguards are
+applied.
+}
+\details{
+Missing date fields, empty workbooks, and changed worksheet layouts
+cause an error.
 }
 \examples{
-\dontrun{read_premium("termpremium")}
-# downloads Term Premium data from the AOFM, returns cleaned in a long format
+search_aofm("term premium")
 
+if (interactive()) {
+  read_premium("termpremium")
+}
+
+}
+\seealso{
+\code{\link[=read_aofm]{read_aofm()}} for the preferred interface and \code{\link[=search_aofm]{search_aofm()}} for
+offline catalogue discovery.
 }
