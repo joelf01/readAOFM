@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/joelf01/readAOFM/blob/HEAD/inst/CITATION)
+[`inst/CITATION`](https://github.com/joelf01/readAOFM/blob/main/inst/CITATION)
 
 joelf01 (2026). readAOFM: Read and Tidy Australian Office of Financial
 Management Data. R package version 0.1.1.

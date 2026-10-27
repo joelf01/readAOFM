@@ -1,5 +1,11 @@
 # Changelog
 
+## readAOFM 0.1.2
+
+- Preserved HTTPS-only downloads on older libcurl builds by selecting
+  the supported protocol options. Download and redirect restrictions,
+  timeouts, size bounds, validation, and cache behavior are unchanged.
+
 ## readAOFM 0.1.1
 
 - Replaced retired `/media/{id}` routes with direct AOFM Data Hub
