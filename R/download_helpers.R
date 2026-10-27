@@ -304,6 +304,18 @@ aofm_sleep <- function(seconds) {
   Sys.sleep(seconds)
 }
 
+aofm_https_protocol_options <- function(supported = names(curl::curl_options())) {
+  if (all(c("protocols_str", "redir_protocols_str") %in% supported)) {
+    return(list(protocols_str = "https", redir_protocols_str = "https"))
+  }
+  if (all(c("protocols", "redir_protocols") %in% supported)) {
+    # CURLPROTO_HTTPS is 1 << 1. These masks preserve the same HTTPS-only
+    # restrictions with libcurl versions predating the string options.
+    return(list(protocols = 2L, redir_protocols = 2L))
+  }
+  stop("The curl library cannot enforce HTTPS-only downloads.", call. = FALSE)
+}
+
 download_aofm_workbook <- function(
     url,
     destfile,
@@ -354,15 +366,13 @@ download_aofm_workbook <- function(
     redirects <- 0L
     repeat {
       unlink(temporary, force = TRUE)
-      handle <- curl::new_handle(
+      handle <- do.call(curl::new_handle, c(list(
         followlocation = FALSE,
         connecttimeout = min(timeout, 10),
         timeout = timeout,
         maxfilesize_large = max_bytes,
-        protocols_str = "https",
-        redir_protocols_str = "https",
         useragent = paste0("readAOFM/", utils::packageVersion("readAOFM"))
-      )
+      ), aofm_https_protocol_options()))
       response <- tryCatch(
         curl::curl_fetch_disk(request_url, temporary, handle = handle),
         error = function(e) {

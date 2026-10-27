@@ -1,6 +1,6 @@
 Package: readAOFM
 Title: Read and Tidy Australian Office of Financial Management Data
-Version: 0.1.1
+Version: 0.1.2
 Authors@R:
     person(given = "joelf01", email = "63056891+joelf01@users.noreply.github.com",
            role = c("aut", "cre", "cph"))

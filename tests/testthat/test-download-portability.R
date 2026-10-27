@@ -6,6 +6,7 @@ test_that("workbook downloads use bounded transport settings", {
   fixture <- tempfile(fileext = ".xlsx")
 
   testthat::local_mocked_bindings(
+    curl_options = function() c(protocols_str = 1L, redir_protocols_str = 2L),
     new_handle = function(...) {
       captured$handle <- list(...)
       captured$handle
@@ -40,7 +41,70 @@ test_that("workbook downloads use bounded transport settings", {
   expect_equal(captured$handle$maxfilesize_large, 100 * 1024^2)
   expect_identical(captured$handle$protocols_str, "https")
   expect_identical(captured$handle$redir_protocols_str, "https")
-  expect_match(captured$handle$useragent, "^readAOFM/0[.]1[.]1$")
+  expect_match(captured$handle$useragent, "^readAOFM/0[.]1[.]2$")
+})
+
+test_that("HTTPS restrictions select only supported protocol options", {
+  expect_identical(
+    readAOFM:::aofm_https_protocol_options(c("protocols_str", "redir_protocols_str")),
+    list(protocols_str = "https", redir_protocols_str = "https")
+  )
+  expect_identical(
+    readAOFM:::aofm_https_protocol_options(c("protocols", "redir_protocols")),
+    list(protocols = 2L, redir_protocols = 2L)
+  )
+  expect_error(
+    readAOFM:::aofm_https_protocol_options(c("protocols_str", "protocols")),
+    "cannot enforce HTTPS-only"
+  )
+})
+
+test_that("older curl options preserve bounded official workbook retrieval", {
+  seen <- NULL
+  source <- fixture_path("tb_issuance.xlsx")
+  destination <- tempfile(fileext = ".xlsx")
+  on.exit(unlink(destination), add = TRUE)
+  testthat::local_mocked_bindings(
+    curl_options = function() c(protocols = 1L, redir_protocols = 2L),
+    new_handle = function(...) {
+      seen <<- list(...)
+      if (any(c("protocols_str", "redir_protocols_str") %in% names(seen))) {
+        stop("Unknown options: protocols_str, redir_protocols_str")
+      }
+      seen
+    },
+    curl_fetch_disk = function(url, path, handle) {
+      file.copy(source, path, overwrite = TRUE)
+      list(status_code = 200L, type = "application/octet-stream", url = url)
+    },
+    .package = "curl"
+  )
+  result <- readAOFM:::download_aofm_workbook(
+    "https://www.aofm.gov.au/sites/default/files/2025-06-20/treasury%20bonds%20-%20issuance.xlsx",
+    destination,
+    timeout = 7,
+    retries = 0L,
+    max_bytes = 1024^2,
+    official_only = TRUE
+  )
+  expect_identical(result, destination)
+  expect_identical(readBin(result, "raw", file.info(result)$size),
+                   readBin(source, "raw", file.info(source)$size))
+  expect_false(seen$followlocation)
+  expect_equal(seen$connecttimeout, 7)
+  expect_equal(seen$timeout, 7)
+  expect_equal(seen$maxfilesize_large, 1024^2)
+  expect_identical(seen$protocols, 2L)
+  expect_identical(seen$redir_protocols, 2L)
+})
+
+test_that("legacy HTTPS protocol masks reject HTTP and file URLs", {
+  options <- readAOFM:::aofm_https_protocol_options(c("protocols", "redir_protocols"))
+  handle <- do.call(curl::new_handle, c(list(timeout = 1), options))
+  expect_error(curl::curl_fetch_memory("http://127.0.0.1:1", handle),
+               "[Pp]rotocol|[Uu]nsupported")
+  expect_error(curl::curl_fetch_memory("file:///not-a-workbook.xlsx", handle),
+               "[Pp]rotocol|[Uu]nsupported")
 })
 
 test_that("workbook downloads retain HTTP and content-type errors", {
