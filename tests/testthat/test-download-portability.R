@@ -36,6 +36,7 @@ test_that("workbook downloads use bounded transport settings", {
   expect_match(basename(captured$path), "[.]part$")
   expect_identical(captured$handle_received, captured$handle)
   expect_false(captured$handle$followlocation)
+  expect_identical(captured$handle$http_version, 2L)
   expect_equal(captured$handle$connecttimeout, 10)
   expect_equal(captured$handle$timeout, 30)
   expect_equal(captured$handle$maxfilesize_large, 100 * 1024^2)
@@ -91,6 +92,7 @@ test_that("older curl options preserve bounded official workbook retrieval", {
   expect_identical(readBin(result, "raw", file.info(result)$size),
                    readBin(source, "raw", file.info(source)$size))
   expect_false(seen$followlocation)
+  expect_identical(seen$http_version, 2L)
   expect_equal(seen$connecttimeout, 7)
   expect_equal(seen$timeout, 7)
   expect_equal(seen$maxfilesize_large, 1024^2)

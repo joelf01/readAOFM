@@ -3,6 +3,8 @@
 * Preserved HTTPS-only downloads on older libcurl builds by selecting the
   supported protocol options. Download and redirect restrictions, timeouts,
   size bounds, validation, and cache behavior are unchanged.
+* Use HTTP/1.1 for workbook transfers to avoid HTTP/2 framing failures with
+  older client/server combinations; HTTPS and certificate checks remain required.
 
 # readAOFM 0.1.1
 

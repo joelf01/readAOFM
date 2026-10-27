@@ -368,6 +368,8 @@ download_aofm_workbook <- function(
       unlink(temporary, force = TRUE)
       handle <- do.call(curl::new_handle, c(list(
         followlocation = FALSE,
+        # HTTP/1.1 avoids workbook-transfer failures with older HTTP/2 stacks.
+        http_version = 2L,
         connecttimeout = min(timeout, 10),
         timeout = timeout,
         maxfilesize_large = max_bytes,
